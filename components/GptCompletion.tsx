@@ -27,28 +27,27 @@ export default function GptCompletion() {
   };
 
   return (
-    <>
-      <div className="flex flex-col gap-3 rounded-xl items-center mb-10">
-        <input
-          type="text"
-          className="p-3 text-black w-96"
-          value={subject}
-          onChange={(e) => setSubject(e.target.value)}
-        />
-        <button
-          className="p-3 bg-white text-black rounded-xl w-40"
-          onClick={handleChatGpt}
-        >
-          Get Result
-        </button>
-      </div>
+    <div className="flex flex-col gap-3 rounded-xl items-center">
+      <input
+        type="text"
+        className="p-3 dark:text-black w-96 rounded-xl"
+        value={subject}
+        placeholder="Your subject..."
+        onChange={(e) => setSubject(e.target.value)}
+      />
+      <button
+        className="p-3 bg-white dark:text-black rounded-xl w-40"
+        onClick={handleChatGpt}
+      >
+        Get Result
+      </button>
       {loading && <Loading />}
       {aiResult && (
         <div
-          className="text-white"
+          className="dark:text-white mt-5"
           dangerouslySetInnerHTML={{ __html: aiResult }}
         />
       )}
-    </>
+    </div>
   );
 }
