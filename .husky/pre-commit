@@ -13,5 +13,3 @@ pnpm lint ||
 )
  
 echo '🎉 No error found: committing this now.... ✨🚀🏄‍♂️🍻'
- 
-npx lint-staged
