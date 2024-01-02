@@ -25,10 +25,10 @@ module.exports = {
   ],
 
   scopes: [
-    { name: "accounts" },
-    { name: "admin" },
-    { name: "exampleScope" },
-    { name: "changeMe" },
+    { name: "ui" },
+    { name: "pages" },
+    { name: "lib" },
+    { name: "config" },
   ],
 
   usePreparedCommit: false, // to re-use commit from ./.git/COMMIT_EDITMSG
