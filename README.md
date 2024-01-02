@@ -20,11 +20,13 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 Fill out .env with your credentials
 
-`GPT_API_KEY=your api key`
-`GPT_MODEL=gpt-4`
-`GPT_TEMPERATURE=0.8`
-`GPT_MAX_TOKENS=2048`
-`OPENAI_ORGANIZATION=your open ai organization`
+```bash
+GPT_API_KEY=your api key
+GPT_MODEL=gpt-4
+GPT_TEMPERATURE=0.8
+GPT_MAX_TOKENS=2048
+OPENAI_ORGANIZATION=your open ai organization
+```
 
 Just insert your prompt on line `8` in `GptCompletion` component. 
 
