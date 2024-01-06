@@ -12,6 +12,7 @@
     "commit": "./node_modules/cz-customizable/standalone.js"
   },
   "dependencies": {
+    "@heroicons/react": "^2.1.1",
     "@prisma/client": "5.7.1",
     "next": "14.0.4",
     "next-auth": "5.0.0-beta.4",
