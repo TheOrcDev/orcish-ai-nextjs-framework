@@ -28,6 +28,7 @@ export type Session = {
 export type User = {
   id: string;
   name: string;
+  password: string;
   email: string;
   emailVerified?: DateTime | null;
   image?: string | null;
