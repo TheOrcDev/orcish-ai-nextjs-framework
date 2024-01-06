@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@auth/prisma-adapter':
+        specifier: ^1.0.13
+        version: 1.0.13(@prisma/client@5.7.1)
       '@heroicons/react':
         specifier: ^2.1.1
         version: 2.1.1(react@18.2.0)
@@ -102,6 +105,34 @@ packages:
       oauth4webapi: 2.4.3
       preact: 10.11.3
       preact-render-to-string: 5.2.3(preact@10.11.3)
+    dev: false
+
+  /@auth/core@0.19.1:
+    resolution: {integrity: sha512-teirzfIp1MWSEX8SN4kNCfD9BOBnX8bL02WyWCOk4TVSucvRxG9GEWcUPRd8KcX4yZ0xVOGiQq7R6JkB2brjVQ==}
+    peerDependencies:
+      nodemailer: ^6.8.0
+    peerDependenciesMeta:
+      nodemailer:
+        optional: true
+    dependencies:
+      '@panva/hkdf': 1.1.1
+      '@types/cookie': 0.6.0
+      cookie: 0.6.0
+      jose: 5.2.0
+      oauth4webapi: 2.4.3
+      preact: 10.11.3
+      preact-render-to-string: 5.2.3(preact@10.11.3)
+    dev: false
+
+  /@auth/prisma-adapter@1.0.13(@prisma/client@5.7.1):
+    resolution: {integrity: sha512-JIlmIrvTkDHl8nG7fn17aJcIHu7wfXqRJJmrNR8UtDNN/1WgfEs66WrYZIK6d96aT6WR+fB/8PqvAG+8Hj9OEw==}
+    peerDependencies:
+      '@prisma/client': '>=2.26.0 || >=3 || >=4 || >=5'
+    dependencies:
+      '@auth/core': 0.19.1
+      '@prisma/client': 5.7.1(prisma@5.7.1)
+    transitivePeerDependencies:
+      - nodemailer
     dev: false
 
   /@babel/runtime@7.23.6:
@@ -425,6 +456,10 @@ packages:
     dependencies:
       '@types/node': 20.10.4
     dev: true
+
+  /@types/cookie@0.6.0:
+    resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==}
+    dev: false
 
   /@types/json5@0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
