@@ -22,6 +22,8 @@ GPT_MAX_TOKENS=2048
 OPENAI_ORGANIZATION=your open ai organization
 ```
 
-Just insert your prompt on line `8` in `GptCompletion` component. 
+Just insert your prompt on line `8` in `GptCompletion` component.
 
 On index page just insert your subject inside an input, and click `Get Result`
+
+Prisma DB is installed on the project. You can simply run `npx prisma studio` to open the Prisma built in GUI.
