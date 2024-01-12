@@ -16,7 +16,7 @@
     "@heroicons/react": "^2.1.1",
     "@prisma/client": "5.7.1",
     "next": "14.0.4",
-    "next-auth": "5.0.0-beta.4",
+    "next-auth": "4.24.5",
     "react": "^18",
     "react-dom": "^18",
     "zod": "^3.22.4"
