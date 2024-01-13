@@ -23,6 +23,9 @@ importers:
       next-auth:
         specifier: 4.24.5
         version: 4.24.5(next@14.0.4)(react-dom@18.2.0)(react@18.2.0)
+      orcish-openai-connector:
+        specifier: ^1.3.2
+        version: 1.3.2
       react:
         specifier: ^18
         version: 18.2.0
@@ -2510,6 +2513,11 @@ packages:
       prelude-ls: 1.2.1
       type-check: 0.4.0
     dev: true
+
+  /orcish-openai-connector@1.3.2:
+    resolution: {integrity: sha512-K8wsTXgMsCRq2ejQ1ZoB2TgTgsp86/F35C5OUk2yWCjw3YDFE/lIubo/jxPo/XXutLB4ZC60FBM6c+rnUuhNwg==}
+    requiresBuild: true
+    dev: false
 
   /os-homedir@1.0.2:
     resolution: {integrity: sha512-B5JU3cabzk8c67mRRd3ECmROafjYMXbuzlwtqdM8IbS8ktlTix8aFGb2bAGKrSRIlnfKwovGUUr72JUPyOb6kQ==}
