@@ -40,7 +40,7 @@ export default function OpenAIImage() {
         className="p-3 bg-white dark:text-black rounded-xl w-40"
         onClick={handleChatGpt}
       >
-        Get Result
+        Get Image
       </button>
       {loading && <Loading />}
       {aiResult && (
