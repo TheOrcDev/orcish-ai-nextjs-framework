@@ -3,9 +3,10 @@
 import React, { useState } from "react";
 import { Loading } from ".";
 import { getOpenAICompletion } from "@/lib/gpt";
+import FButton from "./ui/FButton/FButton";
 
 const prompt = (subject: string) => {
-  return `Prompt text goes here about ${subject}`;
+  return `${subject}`;
 };
 
 export default function OpenAICompletion() {
@@ -35,12 +36,7 @@ export default function OpenAICompletion() {
         placeholder="Your subject..."
         onChange={(e) => setSubject(e.target.value)}
       />
-      <button
-        className="p-3 bg-white dark:text-black rounded-xl w-40"
-        onClick={handleChatGpt}
-      >
-        Get Result
-      </button>
+      <FButton onClick={handleChatGpt}>Get Result</FButton>
       {loading && <Loading />}
       {aiResult && (
         <div

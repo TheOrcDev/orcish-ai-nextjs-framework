@@ -1,6 +1,7 @@
 "use client";
 
 import { OpenAIImage, OpenAICompletion } from "@/components";
+import FButton from "@/components/ui/FButton/FButton";
 import { useState } from "react";
 
 type method = "completion" | "image";
@@ -11,34 +12,24 @@ export default function AISelector() {
   return (
     <>
       <div className="flex gap-5 justify-center">
-        <button
+        <FButton
           onClick={() => setMethodSelected("completion")}
-          className={`p-3 bg-white dark:text-black rounded-xl w-40 ${
-            methodSelected === "completion" && "bg-orange-100"
-          }`}
+          active={methodSelected === "completion"}
         >
           Completion
-        </button>
+        </FButton>
 
-        <button
+        <FButton
           onClick={() => setMethodSelected("image")}
-          className={`p-3 bg-white dark:text-black rounded-xl w-40 ${
-            methodSelected === "image" && "bg-orange-100"
-          }`}
+          active={methodSelected === "image"}
         >
           Image
-        </button>
+        </FButton>
       </div>
-      {methodSelected === "completion" && (
-        <div className="flex flex-col gap-5">
-          <OpenAICompletion />
-        </div>
-      )}
-      {methodSelected === "image" && (
-        <div className="flex flex-col gap-5">
-          <OpenAIImage />
-        </div>
-      )}
+      <div className="flex flex-col gap-5">
+        {methodSelected === "completion" && <OpenAICompletion />}
+        {methodSelected === "image" && <OpenAIImage />}
+      </div>
     </>
   );
 }
