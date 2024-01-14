@@ -1,8 +1,8 @@
 "use client";
 
-import { getChatGPTCompletion } from "@/lib/gpt";
 import React, { useState } from "react";
 import { Loading } from ".";
+import { getChatGPTCompletion } from "@/lib/gpt";
 
 const prompt = (subject: string) => {
   return `Prompt text goes here about ${subject}`;
