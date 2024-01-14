@@ -27,6 +27,12 @@ export default function OpenAICompletion() {
     }
   };
 
+  const enter = (event: React.KeyboardEvent) => {
+    if (event.key === "Enter") {
+      handleChatGpt();
+    }
+  };
+
   return (
     <div className="flex flex-col gap-3 rounded-xl items-center">
       <input
@@ -35,6 +41,7 @@ export default function OpenAICompletion() {
         value={subject}
         placeholder="Your subject..."
         onChange={(e) => setSubject(e.target.value)}
+        onKeyDown={enter}
       />
       <FButton onClick={handleChatGpt}>Get Result</FButton>
       {loading && <Loading />}
