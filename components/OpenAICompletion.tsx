@@ -2,13 +2,13 @@
 
 import React, { useState } from "react";
 import { Loading } from ".";
-import { getChatGPTCompletion } from "@/lib/gpt";
+import { getOpenAICompletion } from "@/lib/gpt";
 
 const prompt = (subject: string) => {
   return `Prompt text goes here about ${subject}`;
 };
 
-export default function GptCompletion() {
+export default function OpenAICompletion() {
   const [subject, setSubject] = useState<string>("");
   const [aiResult, setAiResult] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -17,7 +17,7 @@ export default function GptCompletion() {
     try {
       setLoading(true);
 
-      const result = await getChatGPTCompletion(prompt(subject));
+      const result = await getOpenAICompletion(prompt(subject));
 
       setLoading(false);
       setAiResult(result);
