@@ -8,4 +8,4 @@ export { default as AISelector } from "./Features/AISelector/AISelector";
 export { default as Loading } from "./Widgets/Loading/Loading";
 
 // UI
-export { default as Button } from "./ui/FButton/FButton";
+export { default as Button } from "./ui/OButton/OButton";

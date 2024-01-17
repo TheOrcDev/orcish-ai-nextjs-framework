@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Loading } from ".";
 import { getOpenAICompletion } from "@/lib/gpt";
-import FButton from "./ui/FButton/FButton";
+import OButton from "./ui/OButton/OButton";
 
 const prompt = (subject: string) => {
   return `${subject}`;
@@ -43,7 +43,7 @@ export default function OpenAICompletion() {
         onChange={(e) => setSubject(e.target.value)}
         onKeyDown={enter}
       />
-      <FButton onClick={handleChatGpt}>Get Result</FButton>
+      <OButton onClick={handleChatGpt}>Get Result</OButton>
       {loading && <Loading />}
       {aiResult && (
         <div

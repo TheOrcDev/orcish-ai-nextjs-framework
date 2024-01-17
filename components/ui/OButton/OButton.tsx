@@ -3,7 +3,7 @@ type Props = {
   active?: boolean;
   onClick?: () => void;
 };
-export default function FButton({ children, active, onClick }: Props) {
+export default function OButton({ children, active, onClick }: Props) {
   return (
     <button
       onClick={onClick}

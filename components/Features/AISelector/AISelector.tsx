@@ -1,7 +1,7 @@
 "use client";
 
 import { OpenAIImage, OpenAICompletion } from "@/components";
-import FButton from "@/components/ui/FButton/FButton";
+import OButton from "@/components/ui/OButton/OButton";
 import { useState } from "react";
 
 type method = "completion" | "image";
@@ -12,19 +12,19 @@ export default function AISelector() {
   return (
     <>
       <div className="flex gap-5 justify-center">
-        <FButton
+        <OButton
           onClick={() => setMethodSelected("completion")}
           active={methodSelected === "completion"}
         >
           Completion
-        </FButton>
+        </OButton>
 
-        <FButton
+        <OButton
           onClick={() => setMethodSelected("image")}
           active={methodSelected === "image"}
         >
           Image
-        </FButton>
+        </OButton>
       </div>
       <div className="flex flex-col gap-5">
         {methodSelected === "completion" && <OpenAICompletion />}

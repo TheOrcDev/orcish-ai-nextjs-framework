@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Loading } from ".";
 import { getOpenAIImage } from "@/lib/gpt";
 import Image from "next/image";
-import FButton from "./ui/FButton/FButton";
+import OButton from "./ui/OButton/OButton";
 
 const prompt = (subject: string) => {
   return `${subject}`;
@@ -44,7 +44,7 @@ export default function OpenAIImage() {
         onChange={(e) => setSubject(e.target.value)}
         onKeyDown={enter}
       />
-      <FButton onClick={handleChatGpt}>Get Image</FButton>
+      <OButton onClick={handleChatGpt}>Get Image</OButton>
       {loading && <Loading />}
       {aiResult && (
         <Image alt={"AI Image"} height={1000} width={1000} src={aiResult} />
