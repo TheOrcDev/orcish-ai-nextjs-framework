@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Image from "next/image";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,7 +18,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="p-5 flex justify-center">
+        <div className="p-5 flex items-center justify-between">
+          <Image
+            width={50}
+            height={50}
+            src={"/orcish-ai-nextjs-framework.png"}
+            alt="Orcish AI NextJS Framework"
+          />
           <h1>Orcish AI Next.js Framework</h1>
         </div>
         {children}
