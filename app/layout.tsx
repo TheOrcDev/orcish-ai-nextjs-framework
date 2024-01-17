@@ -15,6 +15,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const year = new Date().getFullYear();
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -29,6 +30,14 @@ export default function RootLayout({
           <a href="/api/auth/signin">login</a>
         </div>
         {children}
+        <footer
+          className="
+          md:fixed flex items-center bottom-5 bg-secondary pl-2 dark:border-green-200
+          left-5 text-xs md:text-sm border-l-2 border-green-500 w-max
+          "
+        >
+          <h2>Made with axe © {year}</h2>
+        </footer>
       </body>
     </html>
   );
