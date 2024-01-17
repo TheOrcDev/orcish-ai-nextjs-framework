@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Loading } from ".";
 import { getOpenAICompletion } from "@/lib/gpt";
 import OButton from "./ui/OButton/OButton";
+import { enter } from "@/lib/events";
 
 const prompt = (subject: string) => {
   return `${subject}`;
@@ -27,12 +28,6 @@ export default function OpenAICompletion() {
     }
   };
 
-  const enter = (event: React.KeyboardEvent) => {
-    if (event.key === "Enter") {
-      handleChatGpt();
-    }
-  };
-
   return (
     <div className="flex flex-col gap-3 rounded-xl items-center">
       <input
@@ -41,7 +36,7 @@ export default function OpenAICompletion() {
         value={subject}
         placeholder="Your subject..."
         onChange={(e) => setSubject(e.target.value)}
-        onKeyDown={enter}
+        onKeyDown={(e) => enter(e, handleChatGpt)}
       />
       <OButton onClick={handleChatGpt}>Get Result</OButton>
       {loading && <Loading />}
