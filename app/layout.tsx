@@ -16,7 +16,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <div className="p-5 flex justify-center">
+          <h1>Orcish AI Next.js Framework</h1>
+        </div>
+        {children}
+      </body>
     </html>
   );
 }
