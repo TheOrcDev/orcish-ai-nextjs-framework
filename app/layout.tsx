@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
 import { OFooter, OHeader } from "@/components";
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,9 +17,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <OHeader />
-      <body className={inter.className}>{children}</body>
-      <OFooter />
+      <body className={inter.className}>
+        <OHeader />
+        {children}
+        <OFooter />
+      </body>
     </html>
   );
 }
