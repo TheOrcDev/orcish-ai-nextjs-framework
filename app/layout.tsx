@@ -26,6 +26,7 @@ export default function RootLayout({
             alt="Orcish AI NextJS Framework"
           />
           <h1>Orcish AI Next.js Framework</h1>
+          <a href="/api/auth/signin">login</a>
         </div>
         {children}
       </body>
