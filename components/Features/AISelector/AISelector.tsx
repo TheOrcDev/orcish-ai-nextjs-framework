@@ -4,10 +4,10 @@ import { OpenAIImage, OpenAICompletion } from "@/components";
 import OButton from "@/components/ui/OButton/OButton";
 import { useState } from "react";
 
-type method = "completion" | "image";
+type Method = "completion" | "image";
 
 export default function AISelector() {
-  const [methodSelected, setMethodSelected] = useState<method>("completion");
+  const [methodSelected, setMethodSelected] = useState<Method>("completion");
 
   return (
     <>
