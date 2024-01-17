@@ -1,16 +1,17 @@
 "use client";
 
 import React, { useState } from "react";
-import { Loading } from ".";
-import { getOpenAICompletion } from "@/lib/gpt";
-import OButton from "./ui/OButton/OButton";
+import { Loading } from "../..";
+import { getOpenAIImage } from "@/lib/gpt";
+import Image from "next/image";
+import OButton from "../../ui/OButton/OButton";
 import { enter } from "@/lib/events";
 
 const prompt = (subject: string) => {
   return `${subject}`;
 };
 
-export default function OpenAICompletion() {
+export default function OpenAIImage() {
   const [subject, setSubject] = useState<string>("");
   const [aiResult, setAiResult] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -19,7 +20,7 @@ export default function OpenAICompletion() {
     try {
       setLoading(true);
 
-      const result = await getOpenAICompletion(prompt(subject));
+      const result = await getOpenAIImage(prompt(subject));
 
       setLoading(false);
       setAiResult(result);
@@ -38,13 +39,10 @@ export default function OpenAICompletion() {
         onChange={(e) => setSubject(e.target.value)}
         onKeyDown={(e) => enter(e, handleChatGpt)}
       />
-      <OButton onClick={handleChatGpt}>Get Result</OButton>
+      <OButton onClick={handleChatGpt}>Get Image</OButton>
       {loading && <Loading />}
       {aiResult && (
-        <div
-          className="dark:text-white mt-5"
-          dangerouslySetInnerHTML={{ __html: aiResult }}
-        />
+        <Image alt={"AI Image"} height={1000} width={1000} src={aiResult} />
       )}
     </div>
   );
