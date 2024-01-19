@@ -15,7 +15,5 @@ export async function getOpenAICompletion(input: string) {
 }
 
 export async function getOpenAIImage(input: string) {
-  return orcishOpenAIService.getDalle3Image(input, {
-    imageResolution: "1024x1024",
-  });
+  return orcishOpenAIService.getDalle3Image(input);
 }
