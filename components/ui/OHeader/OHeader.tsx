@@ -1,6 +1,6 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
 
 export default function OHeader() {
@@ -17,7 +17,10 @@ export default function OHeader() {
       <h1>Orcish AI Next.js Framework</h1>
 
       {status === "authenticated" ? (
-        <div className="p-5 rounded-full">{session?.user?.name}</div>
+        <div className="flex">
+          <button onClick={() => signOut()}>Sign out</button>
+          <div className="p-5 rounded-full">{session?.user?.name}</div>
+        </div>
       ) : (
         <a href="/api/auth/signin">login</a>
       )}
