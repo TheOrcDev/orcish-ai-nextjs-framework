@@ -14,7 +14,6 @@ export default function OHeader() {
         src={"/orcish-ai-nextjs-framework.png"}
         alt="Orcish AI NextJS Framework"
       />
-      <h1>Orcish AI Next.js Framework</h1>
 
       {status === "authenticated" ? (
         <div className="flex">

@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { useSession, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 import { OpenAIImage, OpenAICompletion, OButton } from "@/components";
 
