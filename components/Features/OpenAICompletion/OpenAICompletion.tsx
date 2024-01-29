@@ -31,14 +31,14 @@ export default function OpenAICompletion() {
 
   return (
     <div className="flex flex-col gap-3 rounded-xl items-center">
-      <input
-        type="text"
+      <textarea
         className="p-3 dark:text-black w-96 rounded-xl"
+        rows={4}
         value={subject}
         placeholder="Your subject..."
         onChange={(e) => setSubject(e.target.value)}
         onKeyDown={(e) => enter(e, handleChatGpt)}
-      />
+      ></textarea>
       <OButton onClick={handleChatGpt}>Get Result</OButton>
       {loading && <Loading />}
       {aiResult && (
