@@ -1,13 +1,19 @@
 "use client";
-
-import { OpenAIImage, OpenAICompletion } from "@/components";
-import OButton from "@/components/ui/OButton/OButton";
 import { useState } from "react";
+import { useSession, signOut } from "next-auth/react";
+
+import { OpenAIImage, OpenAICompletion, OButton } from "@/components";
 
 type Method = "completion" | "image";
 
 export default function AISelector() {
+  const { status } = useSession();
+
   const [methodSelected, setMethodSelected] = useState<Method>("completion");
+
+  if (status !== "authenticated") {
+    return <h2>Login</h2>;
+  }
 
   return (
     <>

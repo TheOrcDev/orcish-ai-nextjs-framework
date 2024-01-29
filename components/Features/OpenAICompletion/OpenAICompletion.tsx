@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import { Loading } from "../..";
+
 import { getOpenAICompletion } from "@/lib/gpt";
-import OButton from "../../ui/OButton/OButton";
 import { enter } from "@/lib/events";
+
+import { OButton, Loading } from "@/components";
 
 const prompt = (subject: string) => {
   return `${subject}`;

@@ -1,11 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import { Loading } from "../..";
-import { getOpenAIImage } from "@/lib/gpt";
 import Image from "next/image";
-import OButton from "../../ui/OButton/OButton";
+
+import { getOpenAIImage } from "@/lib/gpt";
 import { enter } from "@/lib/events";
+
+import { OButton, Loading } from "@/components";
 
 const prompt = (subject: string) => {
   return `${subject}`;
@@ -22,8 +23,10 @@ export default function OpenAIImage() {
 
       const result = await getOpenAIImage(prompt(subject));
 
-      setLoading(false);
       setAiResult(result);
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
     } catch (e) {
       throw e;
     }
