@@ -11,7 +11,9 @@ const orcishOpenAIService = new OrcishOpenAIService({
 });
 
 export async function getOpenAICompletion(input: string) {
-  return orcishOpenAIService.getChatGPTCompletion(input);
+  return orcishOpenAIService.getChatGPTCompletion(input, {
+    gptModel: "gpt-4",
+  });
 }
 
 export async function getOpenAIImage(input: string) {
