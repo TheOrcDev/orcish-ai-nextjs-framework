@@ -5,7 +5,7 @@ import Image from "next/image";
 import OButton from "../OButton/OButton";
 
 export default function OHeader() {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
 
   return (
     <header className="p-5 flex items-center justify-between">
