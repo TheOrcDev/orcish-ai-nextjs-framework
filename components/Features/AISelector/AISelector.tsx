@@ -1,15 +1,21 @@
 "use client";
+
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 
 import { OpenAIImage, OpenAICompletion, OButton } from "@/components";
 
-type Method = "completion" | "image";
+enum Method {
+  Completion = "completion",
+  Image = "image",
+}
 
 export default function AISelector() {
   const { status } = useSession();
 
-  const [methodSelected, setMethodSelected] = useState<Method>("completion");
+  const [methodSelected, setMethodSelected] = useState<Method>(
+    Method.Completion
+  );
 
   if (status !== "authenticated") {
     return (
@@ -23,22 +29,22 @@ export default function AISelector() {
     <>
       <div className="flex gap-5 justify-center">
         <OButton
-          onClick={() => setMethodSelected("completion")}
-          active={methodSelected === "completion"}
+          onClick={() => setMethodSelected(Method.Completion)}
+          active={methodSelected === Method.Completion}
         >
           Completion
         </OButton>
 
         <OButton
-          onClick={() => setMethodSelected("image")}
-          active={methodSelected === "image"}
+          onClick={() => setMethodSelected(Method.Image)}
+          active={methodSelected === Method.Image}
         >
           Image
         </OButton>
       </div>
       <div className="flex flex-col gap-5">
-        {methodSelected === "completion" && <OpenAICompletion />}
-        {methodSelected === "image" && <OpenAIImage />}
+        {methodSelected === Method.Completion && <OpenAICompletion />}
+        {methodSelected === Method.Image && <OpenAIImage />}
       </div>
     </>
   );
