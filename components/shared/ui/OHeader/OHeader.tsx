@@ -2,6 +2,7 @@
 
 import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
+import OButton from "../OButton/OButton";
 
 export default function OHeader() {
   const { data: session, status } = useSession();
@@ -17,11 +18,12 @@ export default function OHeader() {
 
       {status === "authenticated" ? (
         <div className="flex">
-          <button onClick={() => signOut()}>Sign out</button>
-          <div className="p-5 rounded-full">{session?.user?.name}</div>
+          <OButton onClick={() => signOut()}>Sign out</OButton>
         </div>
       ) : (
-        <a href="/api/auth/signin">login</a>
+        <a href="/api/auth/signin">
+          <OButton>Login</OButton>
+        </a>
       )}
     </header>
   );

@@ -12,7 +12,11 @@ export default function AISelector() {
   const [methodSelected, setMethodSelected] = useState<Method>("completion");
 
   if (status !== "authenticated") {
-    return <h2>Login</h2>;
+    return (
+      <a href="/api/auth/signin">
+        <OButton>Login</OButton>
+      </a>
+    );
   }
 
   return (
