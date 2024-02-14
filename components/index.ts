@@ -4,7 +4,7 @@ export { default as OpenAIImage } from "./Features/OpenAIImage/OpenAIImage";
 export { default as AISelector } from "./Features/AISelector/AISelector";
 
 // Widgets
-export { default as Loading } from "./Widgets/Loading/Loading";
+export { default as Loading } from "./shared/ui/Loading/Loading";
 
 // UI
 export { default as OButton } from "./shared/ui/OButton/OButton";
