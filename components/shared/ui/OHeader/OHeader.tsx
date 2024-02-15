@@ -16,7 +16,7 @@ export default function OHeader() {
         alt="Orcish AI NextJS Framework"
       />
 
-      {status === "authenticated" ? (
+      {/* {status === "authenticated" ? (
         <div className="flex">
           <OButton onClick={() => signOut()}>Sign out</OButton>
         </div>
@@ -24,7 +24,7 @@ export default function OHeader() {
         <a href="/api/auth/signin">
           <OButton>Login</OButton>
         </a>
-      )}
+      )} */}
     </header>
   );
 }
