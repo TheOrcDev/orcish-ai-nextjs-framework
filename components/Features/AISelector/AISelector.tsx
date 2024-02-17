@@ -17,13 +17,14 @@ export default function AISelector() {
     Method.Completion
   );
 
-  if (status !== "authenticated") {
-    return (
-      <a href="/api/auth/signin">
-        <OButton>Login</OButton>
-      </a>
-    );
-  }
+  // Uncomment for turning the auth on
+  // if (status !== "authenticated") {
+  //   return (
+  //     <a href="/api/auth/signin">
+  //       <OButton>Login</OButton>
+  //     </a>
+  //   );
+  // }
 
   return (
     <>
