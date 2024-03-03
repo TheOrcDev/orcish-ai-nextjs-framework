@@ -1,6 +1,5 @@
 {
   "extends": [
-    "next/core-web-vitals",
-    "plugin:storybook/recommended"
+    "next/core-web-vitals"
   ]
 }
