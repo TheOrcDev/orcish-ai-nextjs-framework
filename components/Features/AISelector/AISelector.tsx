@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 
-import { OpenAIImage, OpenAICompletion, OButton } from "@/components";
+import { OpenAIImage, OpenAICompletion, Button } from "@/components";
 
 enum Method {
   Completion = "completion",
@@ -11,7 +11,7 @@ enum Method {
 }
 
 export default function AISelector() {
-  const { status } = useSession();
+  // const { status } = useSession();
 
   const [methodSelected, setMethodSelected] = useState<Method>(
     Method.Completion
@@ -21,7 +21,7 @@ export default function AISelector() {
   // if (status !== "authenticated") {
   //   return (
   //     <a href="/api/auth/signin">
-  //       <OButton>Login</OButton>
+  //       <Button>Login</Button>
   //     </a>
   //   );
   // }
@@ -29,19 +29,25 @@ export default function AISelector() {
   return (
     <>
       <div className="flex gap-5 justify-center">
-        <OButton
+        <Button
+          variant={"outline"}
           onClick={() => setMethodSelected(Method.Completion)}
-          active={methodSelected === Method.Completion}
+          className={`${
+            methodSelected === Method.Completion && "bg-black text-white"
+          }`}
         >
           Completion
-        </OButton>
+        </Button>
 
-        <OButton
+        <Button
+          variant={"outline"}
           onClick={() => setMethodSelected(Method.Image)}
-          active={methodSelected === Method.Image}
+          className={`${
+            methodSelected === Method.Image && "bg-black text-white"
+          }`}
         >
           Image
-        </OButton>
+        </Button>
       </div>
       <div className="flex flex-col gap-5">
         {methodSelected === Method.Completion && <OpenAICompletion />}

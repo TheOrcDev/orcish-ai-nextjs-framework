@@ -2,9 +2,9 @@
 
 import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
-import OButton from "../OButton/OButton";
+// import Button from "../Button/Button";
 
-export default function OHeader() {
+export default function Header() {
   const { status } = useSession();
 
   return (
@@ -18,11 +18,11 @@ export default function OHeader() {
 
       {/* {status === "authenticated" ? (
         <div className="flex">
-          <OButton onClick={() => signOut()}>Sign out</OButton>
+          <Button onClick={() => signOut()}>Sign out</Button>
         </div>
       ) : (
         <a href="/api/auth/signin">
-          <OButton>Login</OButton>
+          <Button>Login</Button>
         </a>
       )} */}
     </header>

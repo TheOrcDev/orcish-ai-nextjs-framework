@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { OFooter, OHeader } from "@/components";
+import { Footer, Header } from "@/components";
 import "./globals.css";
 import NextAuthProvider from "./context/NextAuthProvider";
 
@@ -20,9 +20,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <NextAuthProvider>
-          <OHeader />
+          <Header />
           {children}
-          <OFooter />
+          <Footer />
         </NextAuthProvider>
       </body>
     </html>

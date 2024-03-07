@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { getOpenAICompletion } from "@/lib/gpt";
 import { enter } from "@/lib/events";
 
-import { OButton, Loading } from "@/components";
+import { Button, Loading, Textarea } from "@/components";
 
 const prompt = (subject: string) => {
   return `${subject}`;
@@ -31,15 +31,15 @@ export default function OpenAICompletion() {
 
   return (
     <div className="flex flex-col gap-3 rounded-xl items-center">
-      <textarea
+      <Textarea
         className="p-3 dark:text-black w-96 rounded-xl"
         rows={4}
         value={subject}
         placeholder="Your subject..."
         onChange={(e) => setSubject(e.target.value)}
         onKeyDown={(e) => enter(e, handleChatGpt)}
-      ></textarea>
-      <OButton onClick={handleChatGpt}>Get Result</OButton>
+      ></Textarea>
+      <Button onClick={handleChatGpt}>Get Result</Button>
       {loading && <Loading />}
       {aiResult && (
         <div
