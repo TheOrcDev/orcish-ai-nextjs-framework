@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Footer, Header } from "@/components";
+import { Footer, Header, ThemeProvider } from "@/components";
 import "./globals.css";
 import NextAuthProvider from "./context/NextAuthProvider";
 
@@ -19,11 +19,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <NextAuthProvider>
-          <Header />
-          {children}
-          <Footer />
-        </NextAuthProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <NextAuthProvider>
+            <Header />
+            {children}
+            <Footer />
+          </NextAuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

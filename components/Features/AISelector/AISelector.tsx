@@ -33,7 +33,8 @@ export default function AISelector() {
           variant={"outline"}
           onClick={() => setMethodSelected(Method.Completion)}
           className={`${
-            methodSelected === Method.Completion && "bg-black text-white"
+            methodSelected === Method.Completion &&
+            "bg-black text-white dark:bg-gray-800"
           }`}
         >
           Completion
@@ -43,7 +44,8 @@ export default function AISelector() {
           variant={"outline"}
           onClick={() => setMethodSelected(Method.Image)}
           className={`${
-            methodSelected === Method.Image && "bg-black text-white"
+            methodSelected === Method.Image &&
+            "bg-black text-white dark:bg-gray-800"
           }`}
         >
           Image

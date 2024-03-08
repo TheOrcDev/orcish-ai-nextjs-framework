@@ -35,14 +35,16 @@ export default function OpenAIImage() {
   return (
     <div className="flex flex-col gap-3 rounded-xl items-center">
       <Textarea
-        className="p-3 dark:text-black w-96 rounded-xl"
+        className="p-3 w-96 rounded-xl"
         rows={4}
         value={subject}
         placeholder="Your subject..."
         onChange={(e) => setSubject(e.target.value)}
         onKeyDown={(e) => enter(e, handleChatGpt)}
       ></Textarea>
-      <Button onClick={handleChatGpt}>Get Image</Button>
+      <Button variant={"outline"} onClick={handleChatGpt}>
+        Get Image
+      </Button>
       {loading && <Loading />}
       {aiResult && (
         <Image alt={"AI Image"} height={1000} width={1000} src={aiResult} />
