@@ -24,16 +24,15 @@ export default function OpenAIImage() {
       const result = await getOpenAIImage(prompt(subject));
 
       setAiResult(result);
-      setTimeout(() => {
-        setLoading(false);
-      }, 2000);
+
+      setLoading(false);
     } catch (e) {
       throw e;
     }
   };
 
   return (
-    <div className="flex flex-col gap-3 rounded-xl items-center">
+    <div className="flex flex-col gap-3 items-center">
       <Textarea
         className="p-3 w-96 rounded-xl"
         rows={4}

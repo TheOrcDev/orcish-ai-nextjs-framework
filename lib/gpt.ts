@@ -1,5 +1,6 @@
 "use server";
 
+import { CompletionModel } from "@/components/shared/types";
 import { OrcishOpenAIService } from "orcish-openai-connector";
 
 if (!process.env.OPENAI_API_KEY) {
@@ -10,9 +11,12 @@ const orcishOpenAIService = new OrcishOpenAIService({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-export async function getOpenAICompletion(input: string) {
+export async function getOpenAICompletion(
+  input: string,
+  model: CompletionModel
+) {
   return orcishOpenAIService.getChatGPTCompletion(input, {
-    gptModel: "gpt-4",
+    gptModel: model,
   });
 }
 
