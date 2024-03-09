@@ -20,9 +20,9 @@
     "@radix-ui/react-slot": "^1.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
-    "lucide-react": "^0.350.0",
-    "next": "14.1.1",
-    "next-auth": "4.24.6",
+    "lucide-react": "^0.354.0",
+    "next": "14.1.3",
+    "next-auth": "4.24.7",
     "next-themes": "^0.2.1",
     "orcish-openai-connector": "^1.4.61",
     "react": "^18.2.0",
@@ -33,20 +33,20 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
-    "@types/node": "^20.11.24",
-    "@types/react": "^18.2.61",
-    "@types/react-dom": "^18.2.19",
+    "@types/node": "^20.11.25",
+    "@types/react": "^18.2.64",
+    "@types/react-dom": "^18.2.21",
     "autoprefixer": "^10.4.18",
     "bcrypt": "^5.1.1",
     "cz-customizable": "^7.0.0",
     "eslint": "^8.57.0",
-    "eslint-config-next": "14.1.1",
+    "eslint-config-next": "14.1.3",
     "husky": "^9.0.11",
     "postcss": "^8.4.35",
     "prisma": "^5.10.2",
     "tailwindcss": "^3.4.1",
     "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
+    "typescript": "^5.4.2"
   },
   "config": {
     "cz-customizable": {
