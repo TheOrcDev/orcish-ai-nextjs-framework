@@ -6,7 +6,6 @@ import { getOpenAICompletion } from "@/lib/gpt";
 import { enter } from "@/lib/events";
 
 import { CompletionModel } from "@/components/shared/types";
-import { DropdownMenu } from "@radix-ui/react-dropdown-menu";
 
 import {
   Button,
@@ -15,6 +14,7 @@ import {
   Textarea,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenu,
 } from "@/components";
 
 const prompt = (subject: string) => {

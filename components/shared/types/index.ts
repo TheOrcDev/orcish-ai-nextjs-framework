@@ -14,3 +14,8 @@ export enum CompletionModel {
   GPT_4_0613 = "gpt-4-0613",
   GPT_4_32K_0613 = "gpt-4-32k-0613",
 }
+
+export enum ImageModel {
+  DALL_E_2 = "dall-e-2",
+  DALL_E_3 = "dall-e-3",
+}
