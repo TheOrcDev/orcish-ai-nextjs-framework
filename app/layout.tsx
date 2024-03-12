@@ -6,6 +6,8 @@ import NextAuthProvider from "./context/NextAuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
+import Provider from "@/app/_trpc/Provider";
+
 export const metadata: Metadata = {
   title: "AI NextJS Framework",
   description: "Framework for using AI completions",
@@ -19,18 +21,20 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning lang="en">
       <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <NextAuthProvider>
-            <Header />
-            {children}
-            <Footer />
-          </NextAuthProvider>
-        </ThemeProvider>
+        <Provider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <NextAuthProvider>
+              <Header />
+              {children}
+              <Footer />
+            </NextAuthProvider>
+          </ThemeProvider>
+        </Provider>
       </body>
     </html>
   );

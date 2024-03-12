@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
-import { getOpenAIImage } from "@/lib/gpt";
+import { trpc } from "@/app/_trpc/client";
 import { enter } from "@/lib/events";
 
 import {
@@ -27,19 +27,34 @@ export default function OpenAIImage() {
   const [subject, setSubject] = useState<string>("");
   const [aiResult, setAiResult] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const [finalPrompt, setFinalPrompt] = useState<string>("");
   const [selectedImageModel, setSelectedImageModel] = useState<ImageModel>(
     ImageModel.DALL_E_3
   );
 
+  const getImage = trpc.gpt.image.useQuery(
+    {
+      prompt: prompt(finalPrompt),
+      model: selectedImageModel,
+    },
+    {
+      initialData: "",
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+    }
+  );
+
+  useEffect(() => {
+    if (getImage.data) {
+      setLoading(false);
+      setAiResult(getImage.data);
+    }
+  }, [getImage.data]);
+
   const handleChatGpt = async () => {
     try {
       setLoading(true);
-
-      const result = await getOpenAIImage(prompt(subject));
-
-      setAiResult(result);
-
-      setLoading(false);
+      setFinalPrompt(subject);
     } catch (e) {
       throw e;
     }

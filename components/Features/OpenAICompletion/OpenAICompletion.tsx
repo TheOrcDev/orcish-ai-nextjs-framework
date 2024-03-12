@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { trpc } from "@/app/_trpc/client";
 
-import { getOpenAICompletion } from "@/lib/gpt";
 import { enter } from "@/lib/events";
 
 import { CompletionModel } from "@/components/shared/types";
@@ -28,19 +28,32 @@ export default function OpenAICompletion() {
   const [aiResult, setAiResult] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedCompletionModel, setSelectedCompletionModel] =
-    useState<CompletionModel>(CompletionModel.GPT_4);
+    useState<CompletionModel>(CompletionModel.GPT_3_5_TURBO);
+  const [finalPrompt, setFinalPrompt] = useState<string>("");
+
+  const getCompletion = trpc.gpt.completion.useQuery(
+    {
+      prompt: prompt(finalPrompt),
+      model: selectedCompletionModel,
+    },
+    {
+      initialData: "",
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+    }
+  );
+
+  useEffect(() => {
+    if (getCompletion.data) {
+      setLoading(false);
+      setAiResult(getCompletion.data);
+    }
+  }, [getCompletion.data]);
 
   const handleChatGpt = async () => {
     try {
       setLoading(true);
-
-      const result = await getOpenAICompletion(
-        prompt(subject),
-        selectedCompletionModel
-      );
-
-      setLoading(false);
-      setAiResult(result);
+      setFinalPrompt(prompt(subject));
     } catch (e) {
       throw e;
     }

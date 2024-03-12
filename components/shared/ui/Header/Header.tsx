@@ -15,6 +15,7 @@ export default function Header() {
         height={50}
         src={"/orcish-ai-nextjs-framework.png"}
         alt="Orcish AI NextJS Framework"
+        priority
       />
 
       <div className="flex">
