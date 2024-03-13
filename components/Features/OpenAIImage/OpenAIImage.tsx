@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
-import { trpc } from "@/app/_trpc/client";
+import { trpc } from "@/server/client";
 import { enter } from "@/lib/events";
 
 import {

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { trpc } from "@/app/_trpc/client";
+import { trpc } from "@/server/client";
 
 import { enter } from "@/lib/events";
 
