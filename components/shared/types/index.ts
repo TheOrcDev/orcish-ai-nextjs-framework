@@ -19,3 +19,17 @@ export enum ImageModel {
   DALL_E_2 = "dall-e-2",
   DALL_E_3 = "dall-e-3",
 }
+
+export enum VoiceModel {
+  TTS_1 = "tts-1",
+  TTS_1_HD = "tts-1-hd",
+}
+
+export enum Voice {
+  ALLOY = "alloy",
+  ECHO = "echo",
+  FABLE = "fable",
+  ONYX = "onyx",
+  NOVA = "nova",
+  SHIMMER = "shimmer",
+}

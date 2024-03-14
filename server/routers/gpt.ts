@@ -1,6 +1,12 @@
 import { OrcishOpenAIService } from "orcish-openai-connector";
+import * as fs from "fs";
 
-import { CompletionModel, ImageModel } from "@/components/shared/types";
+import {
+  CompletionModel,
+  ImageModel,
+  Voice,
+  VoiceModel,
+} from "@/components/shared/types";
 
 if (!process.env.OPENAI_API_KEY) {
   throw "No OpenAI API Key";
@@ -12,6 +18,7 @@ const orcishOpenAIService = new OrcishOpenAIService({
 
 import { router, publicProcedure } from "../trpc";
 import { z } from "zod";
+import path from "path";
 export const gptRouter = router({
   completion: publicProcedure
     .input(
@@ -19,7 +26,7 @@ export const gptRouter = router({
     )
     .query(async (opts) => {
       const { input } = opts;
-      if (input.prompt === "") return;
+      if (input.prompt === "") return "";
       const result = await orcishOpenAIService.getChatGPTCompletion(
         input.prompt,
         {
@@ -32,9 +39,32 @@ export const gptRouter = router({
     .input(z.object({ prompt: z.string(), model: z.nativeEnum(ImageModel) }))
     .query(async (opts) => {
       const { input } = opts;
-      if (input.prompt === "") return;
+      if (input.prompt === "") return "";
       return orcishOpenAIService.getDalle3Image(input.prompt, {
         imageModel: input.model,
       });
+    }),
+  voice: publicProcedure
+    .input(
+      z.object({
+        prompt: z.string(),
+        model: z.nativeEnum(VoiceModel),
+        voice: z.nativeEnum(Voice),
+      })
+    )
+    .query(async (opts) => {
+      const { input } = opts;
+      if (input.prompt === "") return "";
+      const sound = await orcishOpenAIService.textToSpeech(input.prompt, {
+        voiceModel: input.model,
+        voice: input.voice,
+      });
+      const outputPath = "/tts/output.mp3";
+      const _output = path.resolve(outputPath);
+
+      const buffer = Buffer.from(await sound.arrayBuffer());
+      await fs.promises.writeFile(`./public/${_output}`, buffer);
+
+      return outputPath;
     }),
 });

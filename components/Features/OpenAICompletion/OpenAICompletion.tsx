@@ -89,7 +89,7 @@ export default function OpenAICompletion() {
         onKeyDown={(e) => enter(e, handleChatGpt)}
       ></Textarea>
       <Button variant={"outline"} onClick={handleChatGpt}>
-        Get Result
+        Get Completion
       </Button>
       {loading && <Loading />}
       {aiResult && (

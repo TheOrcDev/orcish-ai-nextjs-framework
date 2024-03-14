@@ -1,5 +1,6 @@
 // Features
 export { default as OpenAICompletion } from "./Features/OpenAICompletion/OpenAICompletion";
+export { default as TextToSpeech } from "./Features/TextToSpeech/TextToSpeech";
 export { default as OpenAIImage } from "./Features/OpenAIImage/OpenAIImage";
 export { default as AISelector } from "./Features/AISelector/AISelector";
 
