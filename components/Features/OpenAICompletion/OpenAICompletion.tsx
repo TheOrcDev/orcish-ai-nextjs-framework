@@ -60,7 +60,7 @@ export default function OpenAICompletion() {
   };
 
   return (
-    <div className="flex flex-col gap-3 rounded-xl items-center">
+    <div className="flex flex-col items-center gap-3 rounded-xl">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline">{selectedCompletionModel}</Button>
@@ -72,7 +72,7 @@ export default function OpenAICompletion() {
               onClick={() => setSelectedCompletionModel(model)}
               className={`${
                 selectedCompletionModel === model &&
-                "dark:bg-gray-800 dark:text-white bg-gray-100 "
+                "bg-gray-100 dark:bg-gray-800 dark:text-white "
               }`}
             >
               {model}
@@ -81,7 +81,7 @@ export default function OpenAICompletion() {
         </DropdownMenuContent>
       </DropdownMenu>
       <Textarea
-        className="p-3 w-96 rounded-xl"
+        className="w-96 rounded-xl p-3"
         rows={4}
         value={subject}
         placeholder="Your subject..."
@@ -94,7 +94,7 @@ export default function OpenAICompletion() {
       {loading && <Loading />}
       {aiResult && (
         <div
-          className="dark:text-white mt-5"
+          className="mt-5 dark:text-white"
           dangerouslySetInnerHTML={{ __html: aiResult }}
         />
       )}

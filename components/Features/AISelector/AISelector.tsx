@@ -36,7 +36,7 @@ export default function AISelector() {
 
   return (
     <>
-      <div className="flex gap-5 justify-center">
+      <div className="flex justify-center gap-5">
         {methods.map((method) => (
           <Button
             key={method}

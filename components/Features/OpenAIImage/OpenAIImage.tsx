@@ -61,7 +61,7 @@ export default function OpenAIImage() {
   };
 
   return (
-    <div className="flex flex-col gap-3 items-center">
+    <div className="flex flex-col items-center gap-3">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline">{selectedImageModel}</Button>
@@ -73,7 +73,7 @@ export default function OpenAIImage() {
               onClick={() => setSelectedImageModel(model)}
               className={`${
                 selectedImageModel === model &&
-                "dark:bg-gray-800 dark:text-white bg-gray-100 "
+                "bg-gray-100 dark:bg-gray-800 dark:text-white "
               }`}
             >
               {model}
@@ -82,7 +82,7 @@ export default function OpenAIImage() {
         </DropdownMenuContent>
       </DropdownMenu>
       <Textarea
-        className="p-3 w-96 rounded-xl"
+        className="w-96 rounded-xl p-3"
         rows={4}
         value={subject}
         placeholder="Your subject..."

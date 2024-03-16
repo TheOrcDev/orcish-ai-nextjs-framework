@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 
 import { trpc } from "@/server/client";
 import { enter } from "@/lib/events";
@@ -64,7 +63,7 @@ export default function OpenAIImage() {
   };
 
   return (
-    <div className="flex flex-col gap-3 items-center">
+    <div className="flex flex-col items-center gap-3">
       <div className="flex gap-2">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -77,7 +76,7 @@ export default function OpenAIImage() {
                 onClick={() => setSelectedVoiceModel(model)}
                 className={`${
                   selectedVoiceModel === model &&
-                  "dark:bg-gray-800 dark:text-white bg-gray-100 "
+                  "bg-gray-100 dark:bg-gray-800 dark:text-white "
                 }`}
               >
                 {model}
@@ -96,7 +95,7 @@ export default function OpenAIImage() {
                 onClick={() => setSelectedVoice(voice)}
                 className={`${
                   selectedVoice === voice &&
-                  "dark:bg-gray-800 dark:text-white bg-gray-100 "
+                  "bg-gray-100 dark:bg-gray-800 dark:text-white "
                 }`}
               >
                 {voice}
@@ -107,7 +106,7 @@ export default function OpenAIImage() {
       </div>
 
       <Textarea
-        className="p-3 w-96 rounded-xl"
+        className="w-96 rounded-xl p-3"
         rows={4}
         value={subject}
         placeholder="Your subject..."
