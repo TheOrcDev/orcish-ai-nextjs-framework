@@ -13,6 +13,7 @@ export { default as Footer } from "./shared/ui/Footer/Footer";
 export { Textarea } from "./shared/ui/Textarea/Textarea";
 export * from "./shared/ui/DropdownMenu/DropdownMenu";
 export { Button } from "./shared/ui/Button/Button";
+export { Input } from "./shared/ui/Input/Input";
 
 // Widgets
 export { ThemeProvider } from "./Widgets/ThemeProvider/ThemeProvider";
