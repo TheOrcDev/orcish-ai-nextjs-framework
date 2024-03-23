@@ -37,12 +37,13 @@ export const gptRouter = router({
     }),
   image: publicProcedure
     .input(z.object({ prompt: z.string(), model: z.nativeEnum(ImageModel) }))
-    .query(async (opts) => {
+    .mutation(async (opts) => {
       const { input } = opts;
-      if (input.prompt === "") return "";
-      return orcishOpenAIService.getDalle3Image(input.prompt, {
+
+      const image = await orcishOpenAIService.getDalle3Image(input.prompt, {
         imageModel: input.model,
       });
+      return image;
     }),
   voice: publicProcedure
     .input(

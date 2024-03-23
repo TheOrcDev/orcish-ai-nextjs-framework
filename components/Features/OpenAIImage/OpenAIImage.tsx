@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 
 import { trpc } from "@/server/client";
@@ -17,44 +17,27 @@ import {
 } from "@/components";
 import { ImageModel } from "@/components/shared/types";
 
-const prompt = (subject: string) => {
-  return `${subject}`;
-};
-
 const imageModelsArray = Object.values(ImageModel);
 
 export default function OpenAIImage() {
-  const [subject, setSubject] = useState<string>("");
+  const [prompt, setPrompt] = useState<string>("");
   const [aiResult, setAiResult] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const [finalPrompt, setFinalPrompt] = useState<string>("");
   const [selectedImageModel, setSelectedImageModel] = useState<ImageModel>(
     ImageModel.DALL_E_3
   );
 
-  const getImage = trpc.gpt.image.useQuery(
-    {
-      prompt: prompt(finalPrompt),
-      model: selectedImageModel,
-    },
-    {
-      initialData: "",
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-    }
-  );
-
-  useEffect(() => {
-    if (getImage.data) {
-      setLoading(false);
-      setAiResult(getImage.data);
-    }
-  }, [getImage.data]);
+  const getImage = trpc.gpt.image.useMutation();
 
   const handleChatGpt = async () => {
     try {
       setLoading(true);
-      setFinalPrompt(subject);
+      const image = await getImage.mutateAsync({
+        prompt: prompt,
+        model: selectedImageModel,
+      });
+      setAiResult(image);
+      setLoading(false);
     } catch (e) {
       throw e;
     }
@@ -84,9 +67,9 @@ export default function OpenAIImage() {
       <Textarea
         className="w-96 rounded-xl p-3"
         rows={4}
-        value={subject}
-        placeholder="Your subject..."
-        onChange={(e) => setSubject(e.target.value)}
+        value={prompt}
+        placeholder="Your prompt..."
+        onChange={(e) => setPrompt(e.target.value)}
         onKeyDown={(e) => enter(e, handleChatGpt)}
       ></Textarea>
       <Button variant={"outline"} onClick={handleChatGpt}>
