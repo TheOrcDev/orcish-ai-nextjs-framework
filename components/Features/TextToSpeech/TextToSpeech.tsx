@@ -38,16 +38,12 @@ export default function OpenAIImage() {
     try {
       setAiResult("");
       setLoading(true);
-      voice.mutate(
-        {
-          prompt: prompt(text),
-          model: selectedVoiceModel,
-          voice: selectedVoice,
-        },
-        {
-          onSettled: () => setAiResult("/tts/output.mp3"),
-        }
-      );
+      const tts = await voice.mutateAsync({
+        prompt: prompt(text),
+        model: selectedVoiceModel,
+        voice: selectedVoice,
+      });
+      setAiResult(tts);
       setLoading(false);
     } catch (e) {
       throw e;
