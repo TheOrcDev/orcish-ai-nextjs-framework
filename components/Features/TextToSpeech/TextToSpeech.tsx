@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { trpc } from "@/server/client";
 import { enter } from "@/lib/events";
@@ -17,46 +17,38 @@ import {
   DropdownMenu,
 } from "@/components";
 
-const prompt = (subject: string) => {
-  return `${subject}`;
+const prompt = (text: string) => {
+  return `${text}`;
 };
 
 const voiceModelsArray = Object.values(VoiceModel);
 const voicesArray = Object.values(Voice);
 
 export default function OpenAIImage() {
-  const [subject, setSubject] = useState<string>("");
+  const [text, setText] = useState<string>("");
   const [aiResult, setAiResult] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const [finalPrompt, setFinalPrompt] = useState<string>("");
   const [selectedVoiceModel, setSelectedVoiceModel] = useState<VoiceModel>(
     VoiceModel.TTS_1
   );
   const [selectedVoice, setSelectedVoice] = useState<Voice>(Voice.ECHO);
-
-  const getVoice = trpc.gpt.voice.useQuery(
-    {
-      prompt: prompt(finalPrompt),
-      model: selectedVoiceModel,
-      voice: selectedVoice,
-    },
-    {
-      initialData: "",
-      refetchOnReconnect: false,
-    }
-  );
-
-  useEffect(() => {
-    if (getVoice.data) {
-      setLoading(false);
-      setAiResult(getVoice.data);
-    }
-  }, [getVoice.data]);
+  const voice = trpc.gpt.voice.useMutation();
 
   const handleChatGpt = async () => {
     try {
+      setAiResult("");
       setLoading(true);
-      setFinalPrompt(subject);
+      voice.mutate(
+        {
+          prompt: prompt(text),
+          model: selectedVoiceModel,
+          voice: selectedVoice,
+        },
+        {
+          onSettled: () => setAiResult("/tts/output.mp3"),
+        }
+      );
+      setLoading(false);
     } catch (e) {
       throw e;
     }
@@ -108,9 +100,9 @@ export default function OpenAIImage() {
       <Textarea
         className="w-96 rounded-xl p-3"
         rows={4}
-        value={subject}
-        placeholder="Your subject..."
-        onChange={(e) => setSubject(e.target.value)}
+        value={text}
+        placeholder="Your text..."
+        onChange={(e) => setText(e.target.value)}
         onKeyDown={(e) => enter(e, handleChatGpt)}
       ></Textarea>
       <Button variant={"outline"} onClick={handleChatGpt}>

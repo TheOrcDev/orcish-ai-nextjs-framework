@@ -52,9 +52,8 @@ export const gptRouter = router({
         voice: z.nativeEnum(Voice),
       })
     )
-    .query(async (opts) => {
+    .mutation(async (opts) => {
       const { input } = opts;
-      if (input.prompt === "") return "";
       const sound = await orcishOpenAIService.textToSpeech(input.prompt, {
         voiceModel: input.model,
         voice: input.voice,
@@ -62,9 +61,8 @@ export const gptRouter = router({
       const outputPath = "/tts/output.mp3";
       const _output = path.resolve(outputPath);
 
-      const buffer = Buffer.from(await sound.arrayBuffer());
+      const soundBuffer = await sound.arrayBuffer();
+      const buffer = Buffer.from(soundBuffer);
       await fs.promises.writeFile(`./public/${_output}`, buffer);
-
-      return outputPath;
     }),
 });
