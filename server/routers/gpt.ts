@@ -24,15 +24,16 @@ export const gptRouter = router({
     .input(
       z.object({ prompt: z.string(), model: z.nativeEnum(CompletionModel) })
     )
-    .query(async (opts) => {
+    .mutation(async (opts) => {
       const { input } = opts;
-      if (input.prompt === "") return "";
+
       const result = await orcishOpenAIService.getChatGPTCompletion(
         input.prompt,
         {
           gptModel: input.model,
         }
       );
+
       return result;
     }),
   image: publicProcedure
@@ -43,6 +44,7 @@ export const gptRouter = router({
       const image = await orcishOpenAIService.getDalle3Image(input.prompt, {
         imageModel: input.model,
       });
+
       return image;
     }),
   voice: publicProcedure
@@ -55,10 +57,12 @@ export const gptRouter = router({
     )
     .mutation(async (opts) => {
       const { input } = opts;
+
       const sound = await orcishOpenAIService.textToSpeech(input.prompt, {
         voiceModel: input.model,
         voice: input.voice,
       });
+
       const outputPath = "/tts/output.mp3";
       const _output = path.resolve(outputPath);
 

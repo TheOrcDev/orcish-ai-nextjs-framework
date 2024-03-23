@@ -17,43 +17,26 @@ import {
   DropdownMenu,
 } from "@/components";
 
-const prompt = (subject: string) => {
-  return `${subject}`;
-};
-
 const completionModelsArray = Object.values(CompletionModel);
 
 export default function OpenAICompletion() {
-  const [subject, setSubject] = useState<string>("");
+  const [prompt, setPrompt] = useState<string>("");
   const [aiResult, setAiResult] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedCompletionModel, setSelectedCompletionModel] =
     useState<CompletionModel>(CompletionModel.GPT_3_5_TURBO);
-  const [finalPrompt, setFinalPrompt] = useState<string>("");
 
-  const getCompletion = trpc.gpt.completion.useQuery(
-    {
-      prompt: prompt(finalPrompt),
-      model: selectedCompletionModel,
-    },
-    {
-      initialData: "",
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-    }
-  );
-
-  useEffect(() => {
-    if (getCompletion.data) {
-      setLoading(false);
-      setAiResult(getCompletion.data);
-    }
-  }, [getCompletion.data]);
+  const getCompletion = trpc.gpt.completion.useMutation();
 
   const handleChatGpt = async () => {
     try {
       setLoading(true);
-      setFinalPrompt(prompt(subject));
+      const completion = await getCompletion.mutateAsync({
+        prompt,
+        model: selectedCompletionModel,
+      });
+      setLoading(false);
+      setAiResult(completion);
     } catch (e) {
       throw e;
     }
@@ -83,9 +66,9 @@ export default function OpenAICompletion() {
       <Textarea
         className="w-96 rounded-xl p-3"
         rows={4}
-        value={subject}
-        placeholder="Your subject..."
-        onChange={(e) => setSubject(e.target.value)}
+        value={prompt}
+        placeholder="Your prompt..."
+        onChange={(e) => setPrompt(e.target.value)}
         onKeyDown={(e) => enter(e, handleChatGpt)}
       ></Textarea>
       <Button variant={"outline"} onClick={handleChatGpt}>
