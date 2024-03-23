@@ -19,6 +19,7 @@ const orcishOpenAIService = new OrcishOpenAIService({
 import { router, publicProcedure } from "../trpc";
 import { z } from "zod";
 import path from "path";
+import { createFileName } from "@/lib/utils";
 export const gptRouter = router({
   completion: publicProcedure
     .input(
@@ -63,7 +64,9 @@ export const gptRouter = router({
         voice: input.voice,
       });
 
-      const outputPath = "/tts/output.mp3";
+      const fileName = createFileName(input.prompt);
+
+      const outputPath = `/tts/${fileName}.mp3`;
       const _output = path.resolve(outputPath);
 
       const soundBuffer = await sound.arrayBuffer();
