@@ -1,15 +1,15 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
- 
-echo '🏗️👷 Styling your project before committing👷‍♂️🏗️'
-echo 'please be patient, this may take a while...'
- 
-# Check ESLint Standards
+
+echo '🪓🏗️👹 Preparing orc axes for the mighty project conquest! 👹🏗️🪓'
+echo 'Get ready for battle, this may take a while...'
+
+# Check Orcish Code Standards
 pnpm lint ||
 (
-    echo '🔨❌ Yoo, you have a problem in your code. Check linter 🔨❌
-          Run pnpm lint, add changes and try commit again.';
+    echo `⚔️❌ Grargh, you've encountered an issue in your code. Check the orcish runes! ⚔️❌
+          Run pnpm lint, make changes, and try the conquest again.`;
     false;
 )
- 
-echo '🎉 No error found: committing this now.... ✨🚀🏄‍♂️🍻'
+
+echo '🎉 No problems found: initiating orcish conquest now.... ✨🚀🏹🛡️'
