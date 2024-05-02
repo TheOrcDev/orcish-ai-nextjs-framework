@@ -35,7 +35,7 @@ export default function AISelector() {
   // }
 
   return (
-    <>
+    <div className="md:w-1/2">
       <div className="flex justify-center gap-5">
         {methods.map((method) => (
           <Button
@@ -51,11 +51,11 @@ export default function AISelector() {
           </Button>
         ))}
       </div>
-      <div className="flex flex-col gap-5">
+      <div className="mt-5 flex flex-col gap-5">
         {methodSelected === Method.Completion && <OpenAICompletion />}
         {methodSelected === Method.Image && <OpenAIImage />}
         {methodSelected === Method.TTS && <TextToSpeech />}
       </div>
-    </>
+    </div>
   );
 }
