@@ -94,8 +94,8 @@ export default function OpenAIImage() {
       </div>
 
       <Textarea
-        className="w-96 rounded-xl p-3"
-        rows={4}
+        className="rounded-xl p-3"
+        rows={6}
         value={text}
         placeholder="Your text..."
         onChange={(e) => setText(e.target.value)}

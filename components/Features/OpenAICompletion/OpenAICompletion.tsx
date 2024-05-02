@@ -64,8 +64,8 @@ export default function OpenAICompletion() {
         </DropdownMenuContent>
       </DropdownMenu>
       <Textarea
-        className="w-96 rounded-xl p-3"
-        rows={4}
+        className="rounded-xl p-3"
+        rows={6}
         value={prompt}
         placeholder="Your prompt..."
         onChange={(e) => setPrompt(e.target.value)}
