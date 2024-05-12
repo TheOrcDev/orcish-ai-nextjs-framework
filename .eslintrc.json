@@ -2,5 +2,8 @@
   "extends": [
     "next/core-web-vitals",
     "plugin:tailwindcss/recommended"
-  ]
+  ],
+  "rules": {
+    "no-unused-vars": 1
+  }
 }

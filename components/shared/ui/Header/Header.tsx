@@ -1,12 +1,12 @@
 "use client";
 
-import { useSession, signOut } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { ModeToggle } from "../ModeToggle/ModeToggle";
 // import Button from "../Button/Button";
 
 export default function Header() {
-  const { status } = useSession();
+  // const { status } = useSession();
 
   return (
     <header className="flex items-center justify-between p-5">
