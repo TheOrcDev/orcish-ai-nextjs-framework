@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { trpc } from "@/server/client";
 
 import { enter } from "@/lib/events";
@@ -48,7 +48,7 @@ export default function OpenAICompletion() {
         <DropdownMenuTrigger asChild>
           <Button variant="outline">{selectedCompletionModel}</Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
+        <DropdownMenuContent>
           {completionModelsArray.map((model) => (
             <DropdownMenuItem
               key={model}
@@ -64,23 +64,17 @@ export default function OpenAICompletion() {
         </DropdownMenuContent>
       </DropdownMenu>
       <Textarea
-        className="rounded-xl p-3"
         rows={6}
         value={prompt}
         placeholder="Your prompt..."
         onChange={(e) => setPrompt(e.target.value)}
         onKeyDown={(e) => enter(e, handleChatGpt)}
-      ></Textarea>
+      />
       <Button variant={"outline"} onClick={handleChatGpt}>
         Get Completion
       </Button>
       {loading && <Loading />}
-      {aiResult && (
-        <div
-          className="mt-5 dark:text-white"
-          dangerouslySetInnerHTML={{ __html: aiResult }}
-        />
-      )}
+      {aiResult && <div dangerouslySetInnerHTML={{ __html: aiResult }} />}
     </div>
   );
 }
