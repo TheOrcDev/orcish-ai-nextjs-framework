@@ -55,7 +55,7 @@ export default function OpenAICompletion() {
               onClick={() => setSelectedCompletionModel(model)}
               className={`${
                 selectedCompletionModel === model &&
-                "bg-gray-100 dark:bg-gray-800 dark:text-white "
+                "bg-gray-100 dark:bg-gray-800 dark:text-white"
               }`}
             >
               {model}

@@ -49,14 +49,14 @@ export default function OpenAIImage() {
         <DropdownMenuTrigger asChild>
           <Button variant="outline">{selectedImageModel}</Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
+        <DropdownMenuContent>
           {imageModelsArray.map((model) => (
             <DropdownMenuItem
               key={model}
               onClick={() => setSelectedImageModel(model)}
               className={`${
                 selectedImageModel === model &&
-                "bg-gray-100 dark:bg-gray-800 dark:text-white "
+                "bg-gray-100 dark:bg-gray-800 dark:text-white"
               }`}
             >
               {model}
@@ -65,7 +65,6 @@ export default function OpenAIImage() {
         </DropdownMenuContent>
       </DropdownMenu>
       <Textarea
-        className="rounded-xl p-3"
         rows={6}
         value={prompt}
         placeholder="Your prompt..."
