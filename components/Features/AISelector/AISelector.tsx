@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { Method } from "@/components/shared/types";
+
 // import { useSession } from "next-auth/react";
 
 import {
@@ -9,12 +11,6 @@ import {
   Button,
   TextToSpeech,
 } from "@/components";
-
-enum Method {
-  Completion = "Completion",
-  Image = "Image",
-  TTS = "Text to Speech",
-}
 
 const methods = Object.values(Method);
 
