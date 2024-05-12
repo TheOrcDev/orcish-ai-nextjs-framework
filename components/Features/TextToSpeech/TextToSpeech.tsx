@@ -17,10 +17,6 @@ import {
   DropdownMenu,
 } from "@/components";
 
-const prompt = (text: string) => {
-  return `${text}`;
-};
-
 const voiceModelsArray = Object.values(VoiceModel);
 const voicesArray = Object.values(Voice);
 
@@ -39,7 +35,7 @@ export default function OpenAIImage() {
       setAiResult("");
       setLoading(true);
       const tts = await voice.mutateAsync({
-        prompt: prompt(text),
+        prompt: text,
         model: selectedVoiceModel,
         voice: selectedVoice,
       });
@@ -57,14 +53,14 @@ export default function OpenAIImage() {
           <DropdownMenuTrigger asChild>
             <Button variant="outline">{selectedVoiceModel}</Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent>
             {voiceModelsArray.map((model) => (
               <DropdownMenuItem
                 key={model}
                 onClick={() => setSelectedVoiceModel(model)}
                 className={`${
                   selectedVoiceModel === model &&
-                  "bg-gray-100 dark:bg-gray-800 dark:text-white "
+                  "bg-gray-100 dark:bg-gray-800 dark:text-white"
                 }`}
               >
                 {model}
@@ -94,7 +90,6 @@ export default function OpenAIImage() {
       </div>
 
       <Textarea
-        className="rounded-xl p-3"
         rows={6}
         value={text}
         placeholder="Your text..."
