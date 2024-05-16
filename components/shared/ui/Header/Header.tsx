@@ -9,7 +9,7 @@ export default function Header() {
   // const { status } = useSession();
 
   return (
-    <header className="flex items-center justify-between p-5">
+    <header className="absolute flex w-full items-center justify-between p-5">
       <Image
         width={50}
         height={50}

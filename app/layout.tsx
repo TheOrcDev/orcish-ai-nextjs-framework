@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html suppressHydrationWarning lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.className}`}>
         <Provider>
           <ThemeProvider
             attribute="class"
@@ -29,6 +29,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <NextAuthProvider>
+              <div className="fixed inset-0 -z-10 bg-gradient-to-t from-white to-gray-200 dark:from-gray-800 dark:to-black" />
               <Header />
               {children}
               <Footer />
