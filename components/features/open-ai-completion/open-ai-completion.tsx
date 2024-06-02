@@ -38,7 +38,8 @@ export default function OpenAICompletion() {
       setLoading(false);
       setAiResult(completion);
     } catch (e) {
-      throw e;
+      console.error("Error fetching AI completion:", e);
+      setAiResult("Failed to fetch AI completion. Please try again.");
     }
   };
 
