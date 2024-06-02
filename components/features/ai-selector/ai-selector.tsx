@@ -11,7 +11,7 @@ import {
   TextToSpeech,
 } from "@/components/features";
 
-import { Button } from "@/components";
+import { Button } from "@/components/ui";
 
 const methods = Object.values(Method);
 
