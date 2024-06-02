@@ -9,8 +9,8 @@ const inter = Inter({ subsets: ["latin"] });
 import { TRPCProvider, ThemeProvider } from "@/components/providers";
 
 export const metadata: Metadata = {
-  title: "AI NextJS Framework",
-  description: "Framework for using AI completions",
+  title: "Orcish AI NextJS Framework",
+  description: "Framework for quick AI setup to create SAAS products",
 };
 
 export default function RootLayout({
