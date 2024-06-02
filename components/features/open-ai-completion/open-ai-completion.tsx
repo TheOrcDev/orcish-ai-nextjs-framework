@@ -67,7 +67,7 @@ export default function OpenAICompletion() {
       <Textarea
         rows={6}
         value={prompt}
-        placeholder="Your prompt..."
+        placeholder="Your completion prompt..."
         onChange={(e) => setPrompt(e.target.value)}
         onKeyDown={(e) => enter(e, handleChatGpt)}
       />

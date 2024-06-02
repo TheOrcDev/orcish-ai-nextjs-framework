@@ -67,7 +67,7 @@ export default function OpenAIImage() {
       <Textarea
         rows={6}
         value={prompt}
-        placeholder="Your prompt..."
+        placeholder="Your image prompt..."
         onChange={(e) => setPrompt(e.target.value)}
         onKeyDown={(e) => enter(e, handleChatGpt)}
       ></Textarea>

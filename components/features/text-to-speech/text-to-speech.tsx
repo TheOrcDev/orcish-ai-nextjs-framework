@@ -92,7 +92,7 @@ export default function OpenAIImage() {
       <Textarea
         rows={6}
         value={text}
-        placeholder="Your text..."
+        placeholder="Your text to speech prompt..."
         onChange={(e) => setText(e.target.value)}
         onKeyDown={(e) => enter(e, handleChatGpt)}
       ></Textarea>
