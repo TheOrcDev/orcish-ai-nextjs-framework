@@ -46,7 +46,7 @@ const entities = readFolders("entities")
 const sharedAPIs = readFolders("shared/api")
   .filter((f) => !f.endsWith(".ts") && f !== "lib")
   .map((f) => `${f}-api`);
-const sharedUI = readComponents("shared/ui");
+const sharedUI = readComponents("ui");
 const sharedLibs = readFolders("shared/lib").map((f) => `${f}-lib`);
 
 const workflows = readFolders(".github/workflows", "").map(
