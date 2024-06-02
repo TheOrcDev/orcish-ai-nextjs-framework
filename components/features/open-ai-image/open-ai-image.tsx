@@ -14,7 +14,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenu,
-} from "@/components";
+} from "@/components/ui";
 import { ImageModel } from "@/components/shared/types";
 
 const imageModelsArray = Object.values(ImageModel);

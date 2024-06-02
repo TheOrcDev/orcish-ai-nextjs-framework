@@ -2,7 +2,7 @@
 
 // import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { ModeToggle } from "../ModeToggle/ModeToggle";
+import { ModeToggle } from "../mode-toggle/mode-toggle";
 // import Button from "../Button/Button";
 
 export default function Header() {

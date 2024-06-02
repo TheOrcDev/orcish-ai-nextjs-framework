@@ -10,7 +10,7 @@ export default function Footer() {
         bg-gray-200 pl-2 text-xs dark:bg-gray-800 md:fixed md:text-sm
         "
     >
-      <h2>Made with axe © {year}</h2>
+      <p>Made with axe © {year}</p>
     </footer>
   );
 }

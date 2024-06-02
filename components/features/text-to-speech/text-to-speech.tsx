@@ -15,7 +15,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenu,
-} from "@/components";
+} from "@/components/ui";
 
 const voiceModelsArray = Object.values(VoiceModel);
 const voicesArray = Object.values(Voice);

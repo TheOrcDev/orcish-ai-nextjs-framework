@@ -15,7 +15,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenu,
-} from "@/components";
+} from "@/components/ui";
 
 const completionModelsArray = Object.values(CompletionModel);
 
