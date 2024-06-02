@@ -38,7 +38,7 @@ const readComponents = (relativePath) => {
   return reactFiles;
 };
 
-const widgets = readComponents("widgets");
+const providers = readComponents("providers");
 const features = readComponents("features");
 const entities = readFolders("entities")
   .map((entity) => [entity, ...readFolders(`entities/${entity}/ui`)])
@@ -96,8 +96,8 @@ module.exports = {
 
     "---",
 
-    "widgets",
-    ...widgets,
+    "providers",
+    ...providers,
 
     "---",
     "features",

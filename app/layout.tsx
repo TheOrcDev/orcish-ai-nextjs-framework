@@ -6,7 +6,7 @@ import NextAuthProvider from "./context/NextAuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
-import { TRPCProvider, ThemeProvider } from "@/components/widgets";
+import { TRPCProvider, ThemeProvider } from "@/components/providers";
 
 export const metadata: Metadata = {
   title: "AI NextJS Framework",
