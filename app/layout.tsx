@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Footer, Header, ThemeProvider } from "@/components";
+import { Footer, Header } from "@/components";
 import "./globals.css";
 import NextAuthProvider from "./context/NextAuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
-import { Provider } from "@/components/Widgets/Provider/Provider";
+import { TRPCProvider, ThemeProvider } from "@/components/widgets";
 
 export const metadata: Metadata = {
   title: "AI NextJS Framework",
@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning lang="en">
       <body className={`${inter.className}`}>
-        <Provider>
+        <TRPCProvider>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -35,7 +35,7 @@ export default function RootLayout({
               <Footer />
             </NextAuthProvider>
           </ThemeProvider>
-        </Provider>
+        </TRPCProvider>
       </body>
     </html>
   );

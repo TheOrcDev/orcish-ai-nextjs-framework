@@ -9,7 +9,3 @@ export { default as Loading } from "./shared/ui/Loading/Loading";
 export { ModeToggle } from "./shared/ui/ModeToggle/ModeToggle";
 export { Textarea } from "./shared/ui/Textarea/Textarea";
 
-// Widgets
-export { Provider } from "./Widgets/Provider/Provider";
-export { ThemeProvider } from "./Widgets/ThemeProvider/ThemeProvider";
-
