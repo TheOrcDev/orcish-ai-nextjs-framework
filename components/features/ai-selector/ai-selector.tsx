@@ -8,9 +8,10 @@ import { Method } from "@/components/shared/types";
 import {
   OpenAIImage,
   OpenAICompletion,
-  Button,
   TextToSpeech,
-} from "@/components";
+} from "@/components/features";
+
+import { Button } from "@/components";
 
 const methods = Object.values(Method);
 

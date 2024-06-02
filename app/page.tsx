@@ -1,4 +1,4 @@
-import { AISelector } from "@/components";
+import { AISelector } from "@/components/features";
 
 export default function Home() {
   return (
