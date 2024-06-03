@@ -3,7 +3,7 @@
 // import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { ModeToggle } from "../mode-toggle/mode-toggle";
-// import Button from "../Button/Button";
+// import { Button } from "../button/button";
 
 export default function Header() {
   // const { status } = useSession();
