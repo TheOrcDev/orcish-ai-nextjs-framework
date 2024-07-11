@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Footer, Header } from "@/components/ui";
 import "./globals.css";
-import NextAuthProvider from "./context/NextAuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,12 +27,10 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <NextAuthProvider>
-              <div className="fixed inset-0 -z-10 bg-gradient-to-t from-white to-gray-200 dark:from-gray-800 dark:to-black" />
-              <Header />
-              {children}
-              <Footer />
-            </NextAuthProvider>
+            <div className="fixed inset-0 -z-10 bg-gradient-to-t from-white to-gray-200 dark:from-gray-800 dark:to-black" />
+            <Header />
+            {children}
+            <Footer />
           </ThemeProvider>
         </TRPCProvider>
       </body>

@@ -3,8 +3,6 @@
 import { useState } from "react";
 import { Method } from "@/components/shared/types";
 
-// import { useSession } from "next-auth/react";
-
 import {
   OpenAIImage,
   OpenAICompletion,
@@ -21,15 +19,6 @@ export default function AISelector() {
   const [methodSelected, setMethodSelected] = useState<Method>(
     Method.Completion
   );
-
-  // Uncomment for turning the auth on
-  // if (status !== "authenticated") {
-  //   return (
-  //     <a href="/api/auth/signin">
-  //       <Button>Login</Button>
-  //     </a>
-  //   );
-  // }
 
   return (
     <div className="flex flex-col gap-5 md:w-1/2">
