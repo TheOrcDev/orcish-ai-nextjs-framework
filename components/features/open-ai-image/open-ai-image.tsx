@@ -15,9 +15,10 @@ import {
   DropdownMenuItem,
   DropdownMenu,
 } from "@/components/ui";
-import { ImageModel } from "@/components/shared/types";
+import { ImageModel, Resolution } from "@/components/shared/types";
 
 const imageModelsArray = Object.values(ImageModel);
+const resolutionsArray = Object.values(Resolution);
 
 export default function OpenAIImage() {
   const [prompt, setPrompt] = useState<string>("");
@@ -25,6 +26,9 @@ export default function OpenAIImage() {
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedImageModel, setSelectedImageModel] = useState<ImageModel>(
     ImageModel.DALL_E_3
+  );
+  const [selectedResolution, setSelectedResolution] = useState<Resolution>(
+    Resolution.LANDSCAPE
   );
 
   const getImage = trpc.gpt.image.useMutation();
@@ -35,6 +39,7 @@ export default function OpenAIImage() {
       const image = await getImage.mutateAsync({
         prompt: prompt,
         model: selectedImageModel,
+        resolution: selectedResolution,
       });
       setAiResult(image);
       setLoading(false);
@@ -45,25 +50,47 @@ export default function OpenAIImage() {
 
   return (
     <div className="flex flex-col items-center gap-3">
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="outline">{selectedImageModel}</Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          {imageModelsArray.map((model) => (
-            <DropdownMenuItem
-              key={model}
-              onClick={() => setSelectedImageModel(model)}
-              className={`${
-                selectedImageModel === model &&
-                "bg-gray-100 dark:bg-gray-800 dark:text-white"
-              }`}
-            >
-              {model}
-            </DropdownMenuItem>
-          ))}
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <div className="flex gap-2">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline">{selectedImageModel}</Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            {imageModelsArray.map((model) => (
+              <DropdownMenuItem
+                key={model}
+                onClick={() => setSelectedImageModel(model)}
+                className={`${
+                  selectedImageModel === model &&
+                  "bg-gray-100 dark:bg-gray-800 dark:text-white"
+                }`}
+              >
+                {model}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline">{selectedResolution}</Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            {resolutionsArray.map((resolution) => (
+              <DropdownMenuItem
+                key={resolution}
+                onClick={() => setSelectedResolution(resolution)}
+                className={`${
+                  selectedResolution === resolution &&
+                  "bg-gray-100 dark:bg-gray-800 dark:text-white"
+                }`}
+              >
+                {resolution}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+
       <Textarea
         rows={6}
         value={prompt}

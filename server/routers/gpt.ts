@@ -1,9 +1,10 @@
-import { OrcishOpenAIService } from "orcish-openai-connector";
 import * as fs from "fs";
+import { OrcishOpenAIService } from "orcish-openai-connector";
 
 import {
   CompletionModel,
   ImageModel,
+  Resolution,
   Voice,
   VoiceModel,
 } from "@/components/shared/types";
@@ -16,10 +17,10 @@ const orcishOpenAIService = new OrcishOpenAIService({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-import { router, publicProcedure } from "../trpc";
-import { z } from "zod";
-import path from "path";
 import { createFileName } from "@/lib/utils";
+import path from "path";
+import { z } from "zod";
+import { publicProcedure, router } from "../trpc";
 export const gptRouter = router({
   completion: publicProcedure
     .input(
@@ -38,12 +39,13 @@ export const gptRouter = router({
       return result;
     }),
   image: publicProcedure
-    .input(z.object({ prompt: z.string(), model: z.nativeEnum(ImageModel) }))
+    .input(z.object({ prompt: z.string(), model: z.nativeEnum(ImageModel), resolution: z.nativeEnum(Resolution) }))
     .mutation(async (opts) => {
       const { input } = opts;
 
       const image = await orcishOpenAIService.getDalle3Image(input.prompt, {
         imageModel: input.model,
+        imageResolution: input.resolution
       });
 
       return image;

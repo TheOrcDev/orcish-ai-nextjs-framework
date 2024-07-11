@@ -23,6 +23,13 @@ export const ImageModel = {
 } as const;
 export type ImageModel = (typeof ImageModel)[keyof typeof ImageModel];
 
+export const Resolution = {
+  SQUARE: "1024x1024",
+  PORTRAIT: "1024x1792",
+  LANDSCAPE: "1792x1024",
+} as const;
+export type Resolution = (typeof Resolution)[keyof typeof Resolution];
+
 export const VoiceModel = {
   TTS_1: "tts-1",
   TTS_1_HD: "tts-1-hd",
