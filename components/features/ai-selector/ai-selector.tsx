@@ -14,8 +14,6 @@ import { Button } from "@/components/ui";
 const methods = Object.values(Method);
 
 export default function AISelector() {
-  // const { status } = useSession();
-
   const [methodSelected, setMethodSelected] = useState<Method>(
     Method.Completion
   );
@@ -28,10 +26,7 @@ export default function AISelector() {
             key={method}
             variant={"outline"}
             onClick={() => setMethodSelected(method)}
-            className={`${
-              methodSelected === method &&
-              "bg-black text-white dark:bg-gray-800"
-            }`}
+            disabled={methodSelected === method}
           >
             {method}
           </Button>
