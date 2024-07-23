@@ -26,7 +26,7 @@ export default function OpenAICompletion() {
   const [selectedCompletionModel, setSelectedCompletionModel] =
     useState<CompletionModel>(CompletionModel.GPT_3_5_TURBO);
 
-  const getCompletion = trpc.gpt.completion.useMutation();
+  const getCompletion = trpc.ai.completion.useMutation();
 
   const handleChatGpt = async () => {
     try {

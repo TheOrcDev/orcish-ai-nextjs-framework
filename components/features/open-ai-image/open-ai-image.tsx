@@ -31,7 +31,7 @@ export default function OpenAIImage() {
     Resolution.LANDSCAPE
   );
 
-  const getImage = trpc.gpt.image.useMutation();
+  const getImage = trpc.ai.image.useMutation();
 
   const handleChatGpt = async () => {
     try {

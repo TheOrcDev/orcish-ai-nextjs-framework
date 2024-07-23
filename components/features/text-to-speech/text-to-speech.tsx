@@ -28,7 +28,7 @@ export default function OpenAIImage() {
     VoiceModel.TTS_1
   );
   const [selectedVoice, setSelectedVoice] = useState<Voice>(Voice.ECHO);
-  const voice = trpc.gpt.voice.useMutation();
+  const voice = trpc.ai.voice.useMutation();
 
   const handleChatGpt = async () => {
     try {
