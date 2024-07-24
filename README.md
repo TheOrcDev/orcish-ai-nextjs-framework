@@ -16,21 +16,11 @@ To begin, install the required dependencies using the following command:
 pnpm i
 ```
 
-# Development Server
-
-After installing the dependencies, run the development server:
-
-```bash
-pnpm dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-`cp .env.example .env`
-
 ### Configuration
 
 Create a copy of the provided `.env.example` file and name it `.env`. Fill in the required OpenAI API Key in the newly created `.env` file, and Clerk variables if you're going to use authentication:
+
+`cp .env.example .env`
 
 ```bash
 OPENAI_API_KEY=your_openai_api_key
@@ -42,6 +32,16 @@ NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
 ```
 
 Make sure to replace placeholder values with your actual API keys, and keep them safe!
+
+# Development Server
+
+After installing the dependencies, and adding configuration variables run the development server:
+
+```bash
+pnpm dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Usage Guide
 
