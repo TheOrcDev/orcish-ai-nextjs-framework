@@ -45,6 +45,8 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Usage Guide
 
+If you want to test out Orcish AI Next.js Framework without authentication, you can just put `<AISelector />` component on `app/page.tsx` page.
+
 ## Text Completion:
 
 1. **Locate Input Field:** On the index page of our application, you'll find an input field.
