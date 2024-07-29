@@ -54,6 +54,5 @@
     "cz-customizable": {
       "config": "cz-config.js"
     }
-  },
-  "packageManager": "yarn@4.0.2"
+  }
 }
