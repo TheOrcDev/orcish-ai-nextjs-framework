@@ -4,12 +4,12 @@ import { Loading } from "@/components/ui";
 import { trpc } from "@/server/client";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import Stripe from "stripe";
 
 export default function PaymentSuccess() {
   const searchParams = useSearchParams();
-  const [paymentIntentData, setPaymentIntentData] =
-    useState<Stripe.PaymentIntent>();
+  const [paymentIntentData, setPaymentIntentData] = useState<number | null>(
+    null
+  );
 
   const getPaymentIntent = trpc.tokens.getPaymentIntent.useMutation();
 
@@ -25,7 +25,7 @@ export default function PaymentSuccess() {
         paymentIntent,
         paymentIntentSecret,
       });
-      console.log(data);
+
       setPaymentIntentData(data);
     };
 
@@ -39,7 +39,7 @@ export default function PaymentSuccess() {
       {getPaymentIntent.isPending && <Loading />}
 
       {paymentIntentData && (
-        <h2>You have successfully payed {paymentIntentData.amount / 100}$!</h2>
+        <h2>You have successfully payed {paymentIntentData / 100}$!</h2>
       )}
     </main>
   );

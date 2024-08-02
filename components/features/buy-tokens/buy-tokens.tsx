@@ -18,13 +18,10 @@ import {
   CardTitle,
   Loading,
 } from "@/components/ui";
+
 import { CheckCircledIcon } from "@radix-ui/react-icons";
 
-interface Props {
-  email: String;
-}
-
-export default function BuyTokens({ email }: Props) {
+export default function BuyTokens() {
   const stripePromise = getStripe();
   const createClientSecret = trpc.tokens.getClientSecret.useMutation();
 
@@ -36,6 +33,12 @@ export default function BuyTokens({ email }: Props) {
     const clientSecret = await createClientSecret.mutateAsync({
       tokens: bundle,
     });
+
+    if (!clientSecret) {
+      console.log("No client secret");
+      return;
+    }
+
     setPaymentIntentSecret(clientSecret);
     setShowPayment(true);
   };
@@ -111,7 +114,7 @@ export default function BuyTokens({ email }: Props) {
             clientSecret: paymentIntentSecret,
           }}
         >
-          <PaymentForm email={email} />
+          <PaymentForm back={() => setShowPayment(false)} />
         </Elements>
       )}
     </>

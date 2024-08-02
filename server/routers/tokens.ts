@@ -33,12 +33,7 @@ export const tokensRouter = router({
                     currency: "USD",
                 });
 
-                if (paymentIntent.status === "succeeded") {
-                    // TODO: Save tokens for this user in db
-                    // TODO: Send email to this user
-
-                    return paymentIntent.client_secret;
-                }
+                return paymentIntent.client_secret;
             } catch (e) {
                 throw (e);
             }
@@ -49,7 +44,15 @@ export const tokensRouter = router({
         .mutation(async (opts) => {
             try {
                 const { input } = opts;
-                return await stripe.paymentIntents.retrieve(input.paymentIntent);
+
+                const paymentIntent = await stripe.paymentIntents.retrieve(input.paymentIntent);
+
+                if (paymentIntent.status === "succeeded") {
+                    // TODO: Save tokens for this user in db if they were not saved by this payment intent secret
+                    // TODO: Send success email to this user
+                }
+
+                return paymentIntent.amount;
             } catch (e) {
                 console.log(e)
                 throw (e);

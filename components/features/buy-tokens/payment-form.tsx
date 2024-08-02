@@ -1,19 +1,18 @@
 "use client";
 
-import React from "react";
-
 import {
   PaymentElement,
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
+
 import { Button } from "@/components/ui";
 
 interface Props {
-  email: String;
+  back: () => void;
 }
 
-export default function PaymentForm({ email }: Props) {
+export default function PaymentForm({ back }: Props) {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -24,25 +23,17 @@ export default function PaymentForm({ email }: Props) {
       return;
     }
 
-    const result = await stripe.confirmPayment({
+    await stripe.confirmPayment({
       elements,
       confirmParams: {
         return_url: `${process.env.NEXT_PUBLIC_APP_URL}/order-complete`,
       },
     });
-
-    if (result.error) {
-      // Show error to your customer (for example, payment details incomplete)
-      console.log(result.error.message);
-    } else {
-      // Your customer will be redirected to your `return_url`. For some payment
-      // methods like iDEAL, your customer will be redirected to an intermediate
-      // site first to authorize the payment, then redirected to the `return_url`.
-    }
   }
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-5">
+      <Button onClick={back}>Back</Button>
       <PaymentElement options={{ layout: "accordion" }} />
       <Button type="submit">Buy Tokens</Button>
     </form>
