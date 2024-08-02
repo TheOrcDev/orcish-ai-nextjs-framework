@@ -33,9 +33,26 @@ export const tokensRouter = router({
                     currency: "USD",
                 });
 
-                return paymentIntent.client_secret;
+                if (paymentIntent.status === "succeeded") {
+                    // TODO: Save tokens for this user in db
+                    // TODO: Send email to this user
+
+                    return paymentIntent.client_secret;
+                }
             } catch (e) {
                 throw (e);
             }
-        })
+        }),
+    getPaymentIntent: publicProcedure.input(
+        z.object({ paymentIntent: z.string(), paymentIntentSecret: z.string() })
+    )
+        .mutation(async (opts) => {
+            try {
+                const { input } = opts;
+                return await stripe.paymentIntents.retrieve(input.paymentIntent);
+            } catch (e) {
+                console.log(e)
+                throw (e);
+            }
+        }),
 })

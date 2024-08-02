@@ -30,8 +30,6 @@ export default function PaymentForm({ email }: Props) {
         return_url: `${process.env.NEXT_PUBLIC_APP_URL}/order-complete`,
       },
     });
-    // TODO: Save tokens for this user in db
-    // TODO: Send email to this user
 
     if (result.error) {
       // Show error to your customer (for example, payment details incomplete)

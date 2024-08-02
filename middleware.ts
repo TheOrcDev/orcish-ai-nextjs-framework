@@ -5,6 +5,7 @@ import {
 
 const isProtectedRoute = createRouteMatcher([
     '/ai-selector(.*)',
+    '/buy-tokens(.*)',
 ]);
 
 export default clerkMiddleware((auth, req) => {
