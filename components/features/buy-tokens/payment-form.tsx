@@ -6,6 +6,8 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 
+import { ArrowLeftIcon } from "@radix-ui/react-icons";
+
 import { Button } from "@/components/ui";
 
 interface Props {
@@ -33,9 +35,14 @@ export default function PaymentForm({ back }: Props) {
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-5">
-      <Button onClick={back}>Back</Button>
+      <Button variant={"outline"} onClick={back}>
+        <ArrowLeftIcon className="size-5" />
+        Back
+      </Button>
       <PaymentElement options={{ layout: "accordion" }} />
-      <Button type="submit">Buy Tokens</Button>
+      <Button variant={"outline"} type="submit">
+        Buy Tokens
+      </Button>
     </form>
   );
 }
