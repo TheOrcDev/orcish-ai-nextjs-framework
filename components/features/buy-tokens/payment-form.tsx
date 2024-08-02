@@ -17,20 +17,21 @@ export default function PaymentForm({ email }: Props) {
   const stripe = useStripe();
   const elements = useElements();
 
-  const handleSubmit = async () => {
+  async function onSubmit(event: React.FormEvent) {
+    event.preventDefault();
+
     if (!stripe || !elements) {
       return;
     }
 
     const result = await stripe.confirmPayment({
-      //`Elements` instance that was used to create the Payment Element
       elements,
       confirmParams: {
         return_url: `${process.env.NEXT_PUBLIC_APP_URL}/order-complete`,
       },
     });
-
     // TODO: Save tokens for this user in db
+    // TODO: Send email to this user
 
     if (result.error) {
       // Show error to your customer (for example, payment details incomplete)
@@ -40,13 +41,12 @@ export default function PaymentForm({ email }: Props) {
       // methods like iDEAL, your customer will be redirected to an intermediate
       // site first to authorize the payment, then redirected to the `return_url`.
     }
-  };
+  }
 
-  // TODO: Shadcn Form
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={onSubmit} className="flex flex-col gap-5">
       <PaymentElement options={{ layout: "accordion" }} />
-      <Button type="submit">Submit</Button>
+      <Button type="submit">Buy Tokens</Button>
     </form>
   );
 }

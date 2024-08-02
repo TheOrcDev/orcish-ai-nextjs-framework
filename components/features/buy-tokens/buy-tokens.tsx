@@ -1,17 +1,24 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Elements } from "@stripe/react-stripe-js";
 import getStripe from "@/lib/stripe";
 import PaymentForm from "./payment-form";
+
+import { trpc } from "@/server/client";
+
+import { Tokens } from "@/components/shared/types";
+
 import {
+  Button,
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
+  Loading,
 } from "@/components/ui";
+import { CheckCircledIcon } from "@radix-ui/react-icons";
 
 interface Props {
   email: String;
@@ -19,67 +26,85 @@ interface Props {
 
 export default function BuyTokens({ email }: Props) {
   const stripePromise = getStripe();
+  const createClientSecret = trpc.tokens.getClientSecret.useMutation();
+
   const [paymentIntentSecret, setPaymentIntentSecret] = useState("");
-  const [bundle, setBundle] = useState<10 | 50 | 100>(50);
+  const [showPayment, setShowPayment] = useState<boolean>(false);
+  const [bundle, setBundle] = useState<Tokens>(Tokens.FIFTY);
 
-  useEffect(() => {
-    const getClientSecret = async () => {
-      const response = await fetch("/api/create-payment-intent", {
-        method: "POST",
-        body: JSON.stringify({ amount: 1 }),
-      });
-      const data = await response.json();
-      const { clientSecret } = data;
-      setPaymentIntentSecret(clientSecret);
-    };
-
-    getClientSecret();
-  }, []);
+  const buyTokens = async () => {
+    const clientSecret = await createClientSecret.mutateAsync({
+      tokens: bundle,
+    });
+    setPaymentIntentSecret(clientSecret);
+    setShowPayment(true);
+  };
 
   return (
     <>
-      <div className="flex gap-5">
-        <Card>
-          <CardHeader>
-            <CardTitle>10 Tokens</CardTitle>
-            <CardDescription>Card Description</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p>Card Content</p>
-          </CardContent>
-          <CardFooter>
-            <p>Card Footer</p>
-          </CardFooter>
-        </Card>
+      {!showPayment && !createClientSecret.isPending && (
+        <>
+          <div className="flex gap-5">
+            <Card
+              className={`h-96 w-72 cursor-pointer ${
+                bundle === Tokens.TEN ? "bg-orange-800" : ""
+              }`}
+              onClick={() => setBundle(Tokens.TEN)}
+            >
+              <CardHeader>
+                <CardTitle>Cheapest</CardTitle>
+                <CardDescription>1$</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="flex items-center gap-1">
+                  <CheckCircledIcon className="size-5" /> 10 tokens
+                </div>
+              </CardContent>
+            </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>50 Tokens</CardTitle>
-            <CardDescription>Card Description</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p>Card Content</p>
-          </CardContent>
-          <CardFooter>
-            <p>Card Footer</p>
-          </CardFooter>
-        </Card>
+            <Card
+              className={`h-96 w-72 cursor-pointer ${
+                bundle === Tokens.FIFTY ? "bg-orange-800" : ""
+              }`}
+              onClick={() => setBundle(Tokens.FIFTY)}
+            >
+              <CardHeader>
+                <CardTitle>Efficent</CardTitle>
+                <CardDescription>3.5$</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="flex items-center gap-1">
+                  <CheckCircledIcon className="size-5" /> 50 tokens
+                </div>
+              </CardContent>
+            </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>100 Tokens</CardTitle>
-            <CardDescription>Card Description</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p>Card Content</p>
-          </CardContent>
-          <CardFooter>
-            <p>Card Footer</p>
-          </CardFooter>
-        </Card>
-      </div>
+            <Card
+              className={`h-96 w-72 cursor-pointer ${
+                bundle === Tokens.HUNDRED ? "bg-orange-800" : ""
+              }`}
+              onClick={() => setBundle(Tokens.HUNDRED)}
+            >
+              <CardHeader>
+                <CardTitle>Best Deal</CardTitle>
+                <CardDescription>6$</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="flex items-center gap-1">
+                  <CheckCircledIcon className="size-5" /> 100 tokens
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+          <Button variant={"outline"} size={"lg"} onClick={buyTokens}>
+            Continue
+          </Button>
+        </>
+      )}
 
-      {paymentIntentSecret && (
+      {createClientSecret.isPending && <Loading />}
+
+      {paymentIntentSecret && showPayment && (
         <Elements
           stripe={stripePromise}
           options={{

@@ -52,3 +52,10 @@ export const Method = {
   TTS: "Text to Speech",
 } as const;
 export type Method = (typeof Method)[keyof typeof Method];
+
+export const Tokens = {
+  TEN: "10",
+  FIFTY: "50",
+  HUNDRED: "100"
+} as const;
+export type Tokens = (typeof Tokens)[keyof typeof Tokens];
