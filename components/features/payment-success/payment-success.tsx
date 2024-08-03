@@ -1,9 +1,12 @@
 "use client";
 
-import { Loading } from "@/components/ui";
-import { trpc } from "@/server/client";
-import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import Link from "next/link";
+
+import { trpc } from "@/server/client";
+
+import { Button, Loading } from "@/components/ui";
 
 export default function PaymentSuccess() {
   const searchParams = useSearchParams();
@@ -26,20 +29,25 @@ export default function PaymentSuccess() {
         paymentIntentSecret,
       });
 
-      setPaymentIntentData(data);
+      setPaymentIntentData(data!);
     };
 
     getData();
     // Disabling ESLint warning - Hooks cannot go in here
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [paymentIntent, paymentIntentSecret]);
+  }, []);
 
   return (
     <main>
       {getPaymentIntent.isPending && <Loading />}
 
       {paymentIntentData && (
-        <h2>You have successfully payed {paymentIntentData / 100}$!</h2>
+        <div className="flex flex-col items-center justify-center gap-5">
+          <h2>You have successfully payed {paymentIntentData / 100}$!</h2>
+          <Link href={"/"}>
+            <Button>Go and use your tokens!</Button>
+          </Link>
+        </div>
       )}
     </main>
   );
