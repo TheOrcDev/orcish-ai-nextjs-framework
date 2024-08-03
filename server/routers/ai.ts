@@ -11,11 +11,7 @@ import {
   VoiceModel,
 } from "@/components/shared/types";
 
-import db from "@/db/drizzle";
-import { tokenSpends } from "@/db/schema";
-import { getTotalTokens } from "@/lib/queries";
 import { createFileName } from "@/lib/utils";
-import { currentUser } from "@clerk/nextjs/server";
 import { publicProcedure, router } from "../trpc";
 
 if (!process.env.OPENAI_API_KEY) {
@@ -33,14 +29,15 @@ export const aiRouter = router({
     )
     .mutation(async (opts) => {
       const { input } = opts;
-      const user = await currentUser();
+      // TODO: Add docs first
+      // const user = await currentUser();
 
       try {
-        const totalUserTokens = await getTotalTokens(user?.emailAddresses[0].emailAddress!);
+        // const totalUserTokens = await getTotalTokens(user?.emailAddresses[0].emailAddress!);
 
-        if (totalUserTokens <= 0) {
-          return "Not enough tokens";
-        }
+        // if (totalUserTokens <= 0) {
+        //   return "Not enough tokens";
+        // }
 
         const result = await orcishOpenAIService.getChatGPTCompletion(
           input.prompt,
@@ -49,11 +46,11 @@ export const aiRouter = router({
           }
         );
 
-        await db.insert(tokenSpends).values({
-          amount: 1,
-          email: user?.emailAddresses[0].emailAddress!,
-          action: "completion"
-        });
+        // await db.insert(tokenSpends).values({
+        //   amount: 1,
+        //   email: user?.emailAddresses[0].emailAddress!,
+        //   action: "completion"
+        // });
 
         return result;
       } catch (e) {
@@ -69,25 +66,25 @@ export const aiRouter = router({
     .mutation(async (opts) => {
       const { input } = opts;
 
-      const user = await currentUser();
+      // const user = await currentUser();
 
       try {
-        const totalUserTokens = await getTotalTokens(user?.emailAddresses[0].emailAddress!);
+        // const totalUserTokens = await getTotalTokens(user?.emailAddresses[0].emailAddress!);
 
-        if (totalUserTokens <= 0) {
-          return "Not enough tokens";
-        }
+        // if (totalUserTokens <= 0) {
+        //   return "Not enough tokens";
+        // }
 
         const image = await orcishOpenAIService.getDalle3Image(input.prompt, {
           imageModel: input.model,
           imageResolution: input.resolution
         });
 
-        await db.insert(tokenSpends).values({
-          amount: 1,
-          email: user?.emailAddresses[0].emailAddress!,
-          action: "image"
-        });
+        // await db.insert(tokenSpends).values({
+        //   amount: 1,
+        //   email: user?.emailAddresses[0].emailAddress!,
+        //   action: "image"
+        // });
 
         return image;
       } catch (e) {
@@ -104,14 +101,14 @@ export const aiRouter = router({
     )
     .mutation(async (opts) => {
       const { input } = opts;
-      const user = await currentUser();
+      // const user = await currentUser();
 
       try {
-        const totalUserTokens = await getTotalTokens(user?.emailAddresses[0].emailAddress!);
+        // const totalUserTokens = await getTotalTokens(user?.emailAddresses[0].emailAddress!);
 
-        if (totalUserTokens <= 0) {
-          return "Not enough tokens";
-        }
+        // if (totalUserTokens <= 0) {
+        //   return "Not enough tokens";
+        // }
 
         const sound = await orcishOpenAIService.textToSpeech(input.prompt, {
           voiceModel: input.model,
@@ -128,11 +125,11 @@ export const aiRouter = router({
         const buffer = Buffer.from(soundBuffer);
         await fs.promises.writeFile(`./public/${_output}`, buffer);
 
-        await db.insert(tokenSpends).values({
-          amount: 1,
-          email: user?.emailAddresses[0].emailAddress!,
-          action: "image"
-        });
+        // await db.insert(tokenSpends).values({
+        //   amount: 1,
+        //   email: user?.emailAddresses[0].emailAddress!,
+        //   action: "image"
+        // });
 
         return outputPath;
       } catch (e) {
