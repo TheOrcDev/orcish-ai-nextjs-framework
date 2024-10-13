@@ -10,13 +10,12 @@ export default function UserInfo() {
 
   return (
     <div className="flex items-center gap-2">
-      <Badge>{tokens?.data} tokens</Badge>
-
       <SignedOut>
         <SignInButton />
       </SignedOut>
 
       <SignedIn>
+        <Badge>{tokens?.data} tokens</Badge>
         <UserButton />
       </SignedIn>
     </div>
