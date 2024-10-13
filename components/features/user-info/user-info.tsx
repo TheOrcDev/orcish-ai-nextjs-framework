@@ -2,12 +2,18 @@
 
 import Link from "next/link";
 
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+import {
+  ClerkLoading,
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+} from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import { Loader2 } from "lucide-react";
 import { useTheme } from "next-themes";
 
-import { Badge } from "@/components/ui";
+import { Badge, Skeleton } from "@/components/ui";
 import { trpc } from "@/server/client";
 
 export default function UserInfo() {
@@ -21,20 +27,24 @@ export default function UserInfo() {
       </SignedOut>
 
       <SignedIn>
-        {!tokens.isPending ? (
-          <>
-            <Link href="/buy-tokens">
-              <Badge>{tokens?.data} tokens</Badge>
-            </Link>
-            <UserButton
-              appearance={{
-                baseTheme: resolvedTheme === "dark" ? dark : undefined,
-              }}
-            />
-          </>
-        ) : (
-          <Loader2 className="animate-spin" />
-        )}
+        <Link href="/buy-tokens">
+          <Badge className="flex items-center text-base">
+            {tokens.isPending ? (
+              <Loader2 className="mr-2 animate-spin" />
+            ) : (
+              tokens?.data
+            )}{" "}
+            tokens
+          </Badge>
+        </Link>
+        <ClerkLoading>
+          <Skeleton className="size-8 rounded-full" />
+        </ClerkLoading>
+        <UserButton
+          appearance={{
+            baseTheme: resolvedTheme === "dark" ? dark : undefined,
+          }}
+        />
       </SignedIn>
     </div>
   );
