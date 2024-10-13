@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+
 import { Footer } from "@/components/ui";
+
 import "./globals.css";
+
 import { ClerkProvider } from "@clerk/nextjs";
 
-const inter = Inter({ subsets: ["latin"] });
+import { ThemeProvider, TRPCProvider } from "@/components/providers";
 
-import { TRPCProvider, ThemeProvider } from "@/components/providers";
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Orcish AI NextJS Framework",

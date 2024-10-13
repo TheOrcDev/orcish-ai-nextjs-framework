@@ -1,21 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import { Method } from "@/components/shared/types";
 
 import {
-  OpenAIImage,
   OpenAICompletion,
+  OpenAIImage,
   TextToSpeech,
 } from "@/components/features";
-
+import { Method } from "@/components/shared/types";
 import { Button } from "@/components/ui";
 
 const methods = Object.values(Method);
 
 export default function AISelector() {
   const [methodSelected, setMethodSelected] = useState<Method>(
-    Method.Completion
+    Method.Completion,
   );
 
   return (

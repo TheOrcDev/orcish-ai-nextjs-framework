@@ -1,8 +1,9 @@
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
+
+import { UserInfo } from "@/components/features";
 
 import { ModeToggle } from "../mode-toggle/mode-toggle";
-import { UserInfo } from "@/components/features";
 
 export default function Header() {
   return (

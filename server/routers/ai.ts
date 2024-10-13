@@ -1,6 +1,7 @@
 import * as fs from "fs";
-import { OrcishOpenAIService } from "orcish-openai-connector";
 import path from "path";
+
+import { OrcishOpenAIService } from "orcish-openai-connector";
 import { z } from "zod";
 
 import {
@@ -10,8 +11,8 @@ import {
   Voice,
   VoiceModel,
 } from "@/components/shared/types";
-
 import { createFileName } from "@/lib/utils";
+
 import { publicProcedure, router } from "../trpc";
 
 if (!process.env.OPENAI_API_KEY) {
@@ -25,7 +26,7 @@ const orcishOpenAIService = new OrcishOpenAIService({
 export const aiRouter = router({
   completion: publicProcedure
     .input(
-      z.object({ prompt: z.string(), model: z.nativeEnum(CompletionModel) })
+      z.object({ prompt: z.string(), model: z.nativeEnum(CompletionModel) }),
     )
     .mutation(async (opts) => {
       const { input } = opts;
@@ -43,7 +44,7 @@ export const aiRouter = router({
           input.prompt,
           {
             gptModel: input.model,
-          }
+          },
         );
 
         // await db.insert(tokenSpends).values({
@@ -54,15 +55,17 @@ export const aiRouter = router({
 
         return result;
       } catch (e) {
-        throw (e);
+        throw e;
       }
     }),
   image: publicProcedure
-    .input(z.object({
-      prompt: z.string(),
-      model: z.nativeEnum(ImageModel),
-      resolution: z.nativeEnum(Resolution)
-    }))
+    .input(
+      z.object({
+        prompt: z.string(),
+        model: z.nativeEnum(ImageModel),
+        resolution: z.nativeEnum(Resolution),
+      }),
+    )
     .mutation(async (opts) => {
       const { input } = opts;
 
@@ -77,7 +80,7 @@ export const aiRouter = router({
 
         const image = await orcishOpenAIService.getDalle3Image(input.prompt, {
           imageModel: input.model,
-          imageResolution: input.resolution
+          imageResolution: input.resolution,
         });
 
         // await db.insert(tokenSpends).values({
@@ -88,7 +91,7 @@ export const aiRouter = router({
 
         return image;
       } catch (e) {
-        throw (e);
+        throw e;
       }
     }),
   voice: publicProcedure
@@ -97,7 +100,7 @@ export const aiRouter = router({
         prompt: z.string(),
         model: z.nativeEnum(VoiceModel),
         voice: z.nativeEnum(Voice),
-      })
+      }),
     )
     .mutation(async (opts) => {
       const { input } = opts;
@@ -133,7 +136,7 @@ export const aiRouter = router({
 
         return outputPath;
       } catch (e) {
-        throw (e);
+        throw e;
       }
     }),
 });

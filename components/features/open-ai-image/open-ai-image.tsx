@@ -3,19 +3,18 @@
 import React, { useState } from "react";
 import Image from "next/image";
 
-import { trpc } from "@/server/client";
-import { enter } from "@/lib/events";
-
+import { ImageModel, Resolution } from "@/components/shared/types";
 import {
   Button,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuTrigger,
   Loading,
   Textarea,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenu,
 } from "@/components/ui";
-import { ImageModel, Resolution } from "@/components/shared/types";
+import { enter } from "@/lib/events";
+import { trpc } from "@/server/client";
 
 const imageModelsArray = Object.values(ImageModel);
 const resolutionsArray = Object.values(Resolution);
@@ -25,10 +24,10 @@ export default function OpenAIImage() {
   const [aiResult, setAiResult] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedImageModel, setSelectedImageModel] = useState<ImageModel>(
-    ImageModel.DALL_E_3
+    ImageModel.DALL_E_3,
   );
   const [selectedResolution, setSelectedResolution] = useState<Resolution>(
-    Resolution.LANDSCAPE
+    Resolution.LANDSCAPE,
   );
 
   const getImage = trpc.ai.image.useMutation();

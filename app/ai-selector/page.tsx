@@ -1,7 +1,9 @@
+import Link from "next/link";
+
+import { ArrowLeftIcon } from "@radix-ui/react-icons";
+
 import { AISelector } from "@/components/features";
 import { Button, Header } from "@/components/ui";
-import { ArrowLeftIcon } from "@radix-ui/react-icons";
-import Link from "next/link";
 
 export default function AiSelectroPage() {
   return (

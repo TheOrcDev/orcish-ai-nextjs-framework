@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 
-import { trpc } from "@/server/client";
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-import { useTheme } from "next-themes";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import { Loader2 } from "lucide-react";
+import { useTheme } from "next-themes";
 
 import { Badge } from "@/components/ui";
+import { trpc } from "@/server/client";
 
 export default function UserInfo() {
   const tokens = trpc.tokens.getTokens.useQuery();

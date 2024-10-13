@@ -1,17 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-
-import { trpc } from "@/server/client";
+import { useSearchParams } from "next/navigation";
 
 import { Button, Loading } from "@/components/ui";
+import { trpc } from "@/server/client";
 
 export default function PaymentSuccess() {
   const searchParams = useSearchParams();
   const [paymentIntentData, setPaymentIntentData] = useState<number | null>(
-    null
+    null,
   );
 
   const getPaymentIntent = trpc.tokens.getPaymentIntent.useMutation();

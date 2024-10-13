@@ -1,21 +1,19 @@
 "use client";
 
 import React, { useState } from "react";
-import { trpc } from "@/server/client";
-
-import { enter } from "@/lib/events";
 
 import { CompletionModel } from "@/components/shared/types";
-
 import {
   Button,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuTrigger,
   Loading,
   Textarea,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenu,
 } from "@/components/ui";
+import { enter } from "@/lib/events";
+import { trpc } from "@/server/client";
 
 const completionModelsArray = Object.values(CompletionModel);
 

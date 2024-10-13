@@ -1,12 +1,11 @@
 "use client";
 
+import { ArrowLeftIcon } from "@radix-ui/react-icons";
 import {
   PaymentElement,
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
-
-import { ArrowLeftIcon } from "@radix-ui/react-icons";
 
 import { Button } from "@/components/ui";
 

@@ -2,20 +2,18 @@
 
 import React, { useState } from "react";
 
-import { trpc } from "@/server/client";
-import { enter } from "@/lib/events";
-
 import { Voice, VoiceModel } from "@/components/shared/types";
-
 import {
   Button,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuTrigger,
   Loading,
   Textarea,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenu,
 } from "@/components/ui";
+import { enter } from "@/lib/events";
+import { trpc } from "@/server/client";
 
 const voiceModelsArray = Object.values(VoiceModel);
 const voicesArray = Object.values(Voice);
@@ -25,7 +23,7 @@ export default function OpenAIImage() {
   const [aiResult, setAiResult] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedVoiceModel, setSelectedVoiceModel] = useState<VoiceModel>(
-    VoiceModel.TTS_1
+    VoiceModel.TTS_1,
   );
   const [selectedVoice, setSelectedVoice] = useState<Voice>(Voice.ECHO);
   const voice = trpc.ai.voice.useMutation();
