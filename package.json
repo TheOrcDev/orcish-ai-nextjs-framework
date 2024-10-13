@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^5.7.2",
+    "@clerk/themes": "^2.1.35",
     "@heroicons/react": "^2.1.5",
     "@hookform/resolvers": "^3.9.0",
     "@neondatabase/serverless": "^0.10.1",

@@ -11,6 +11,9 @@ importers:
       '@clerk/nextjs':
         specifier: ^5.7.2
         version: 5.7.2(next@14.2.15(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@clerk/themes':
+        specifier: ^2.1.35
+        version: 2.1.35
       '@heroicons/react':
         specifier: ^2.1.5
         version: 2.1.5(react@18.3.1)
@@ -178,6 +181,10 @@ packages:
         optional: true
       react-dom:
         optional: true
+
+  '@clerk/themes@2.1.35':
+    resolution: {integrity: sha512-woISi7Li+hUrFRQofELgpjr0gYOMK39m+ljW6EcOLiGWmJPJiUqOADS1gPY3kzH/qnO+6jJYWtu4bn8NsSH+Sw==}
+    engines: {node: '>=18.17.0'}
 
   '@clerk/types@4.25.0':
     resolution: {integrity: sha512-p2IyJ0q5WF1e976L1pS1J6Mb5ducfkUC31DR1EvMjPwJkrlWJdAMCPc+zqRRAePVy/JBVK2gEKbUVtJ6/jrpag==}
@@ -2962,6 +2969,11 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
+  '@clerk/themes@2.1.35':
+    dependencies:
+      '@clerk/types': 4.25.0
+      tslib: 2.4.1
+
   '@clerk/types@4.25.0':
     dependencies:
       csstype: 3.1.1
@@ -4039,7 +4051,7 @@ snapshots:
   dot-case@3.0.4:
     dependencies:
       no-case: 3.0.4
-      tslib: 2.4.1
+      tslib: 2.7.0
 
   dotenv@16.4.5: {}
 
@@ -4869,7 +4881,7 @@ snapshots:
 
   lower-case@2.0.2:
     dependencies:
-      tslib: 2.4.1
+      tslib: 2.7.0
 
   lru-cache@10.4.3: {}
 
@@ -4953,7 +4965,7 @@ snapshots:
   no-case@3.0.4:
     dependencies:
       lower-case: 2.0.2
-      tslib: 2.4.1
+      tslib: 2.7.0
 
   node-releases@2.0.18: {}
 
@@ -5327,7 +5339,7 @@ snapshots:
   snake-case@3.0.4:
     dependencies:
       dot-case: 3.0.4
-      tslib: 2.4.1
+      tslib: 2.7.0
 
   snakecase-keys@5.4.4:
     dependencies:
