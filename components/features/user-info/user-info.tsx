@@ -13,7 +13,7 @@ import { dark } from "@clerk/themes";
 import { Loader2 } from "lucide-react";
 import { useTheme } from "next-themes";
 
-import { Badge, Skeleton } from "@/components/ui";
+import { Badge, Button, Skeleton } from "@/components/ui";
 import { trpc } from "@/server/client";
 
 export default function UserInfo() {
@@ -23,7 +23,9 @@ export default function UserInfo() {
   return (
     <div className="flex items-center gap-2">
       <SignedOut>
-        <SignInButton />
+        <Button variant="outline">
+          <SignInButton />
+        </Button>
       </SignedOut>
 
       <SignedIn>
