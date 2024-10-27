@@ -31,7 +31,7 @@ export default function UserInfo() {
       <SignedIn>
         <Link href="/buy-tokens">
           <Badge className="flex items-center text-base">
-            {tokens.isPending ? (
+            {tokens.isLoading ? (
               <Loader2 className="mr-2 animate-spin" />
             ) : (
               tokens?.data

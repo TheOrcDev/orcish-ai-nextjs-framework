@@ -38,7 +38,7 @@ export default function PaymentSuccess() {
 
   return (
     <main>
-      {getPaymentIntent.isPending && <Loading />}
+      {getPaymentIntent.isLoading && <Loading />}
 
       {paymentIntentData && (
         <div className="flex flex-col items-center justify-center gap-5">

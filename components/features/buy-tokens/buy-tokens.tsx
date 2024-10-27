@@ -47,7 +47,7 @@ export default function BuyTokens() {
 
   return (
     <>
-      {!showPayment && !createClientSecret.isPending && (
+      {!showPayment && !createClientSecret.isLoading && (
         <>
           <div className="grid w-full gap-5 md:grid-cols-2 lg:grid-cols-3 lg:px-20">
             <Card className="cursor-pointer transition duration-300 ease-in-out">
@@ -104,7 +104,7 @@ export default function BuyTokens() {
         </>
       )}
 
-      {createClientSecret.isPending && <Loading />}
+      {createClientSecret.isLoading && <Loading />}
 
       {paymentIntentSecret && showPayment && (
         <Elements
