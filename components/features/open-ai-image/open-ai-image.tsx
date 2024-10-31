@@ -3,107 +3,152 @@
 import React, { useState } from "react";
 import Image from "next/image";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
 import { ImageModel, Resolution } from "@/components/shared/types";
 import {
   Button,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
   Loading,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
   Textarea,
 } from "@/components/ui";
-import { enter } from "@/lib/events";
-import { trpc } from "@/server/client";
+import { getImage } from "@/server/ai";
 
 const imageModelsArray = Object.values(ImageModel);
 const resolutionsArray = Object.values(Resolution);
 
+const formSchema = z.object({
+  prompt: z.string().min(2),
+  model: z.nativeEnum(ImageModel),
+  resolution: z.nativeEnum(Resolution),
+});
+
 export default function OpenAIImage() {
-  const [prompt, setPrompt] = useState<string>("");
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      prompt: "",
+      model: ImageModel.DALL_E_3,
+      resolution: Resolution.LANDSCAPE,
+    },
+  });
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setLoading(true);
+    const image = await getImage(
+      values.prompt,
+      values.model,
+      values.resolution,
+    );
+    setAiResult(image);
+    setLoading(false);
+  }
+
   const [aiResult, setAiResult] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const [selectedImageModel, setSelectedImageModel] = useState<ImageModel>(
-    ImageModel.DALL_E_3,
-  );
-  const [selectedResolution, setSelectedResolution] = useState<Resolution>(
-    Resolution.LANDSCAPE,
-  );
-
-  const getImage = trpc.ai.image.useMutation();
-
-  const handleChatGpt = async () => {
-    try {
-      setLoading(true);
-      const image = await getImage.mutateAsync({
-        prompt: prompt,
-        model: selectedImageModel,
-        resolution: selectedResolution,
-      });
-      setAiResult(image);
-      setLoading(false);
-    } catch (e) {
-      throw e;
-    }
-  };
 
   return (
-    <div className="flex flex-col items-center gap-3">
-      <div className="flex gap-2">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline">{selectedImageModel}</Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            {imageModelsArray.map((model) => (
-              <DropdownMenuItem
-                key={model}
-                onClick={() => setSelectedImageModel(model)}
-                className={`${
-                  selectedImageModel === model &&
-                  "bg-gray-100 dark:bg-gray-800 dark:text-white"
-                }`}
-              >
-                {model}
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline">{selectedResolution}</Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            {resolutionsArray.map((resolution) => (
-              <DropdownMenuItem
-                key={resolution}
-                onClick={() => setSelectedResolution(resolution)}
-                className={`${
-                  selectedResolution === resolution &&
-                  "bg-gray-100 dark:bg-gray-800 dark:text-white"
-                }`}
-              >
-                {resolution}
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col items-center gap-3 rounded-xl"
+      >
+        <div className="flex gap-2">
+          <FormField
+            control={form.control}
+            name="model"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Model</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a model" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {imageModelsArray.map((model) => (
+                      <SelectItem key={model} value={model}>
+                        {model}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-      <Textarea
-        rows={6}
-        value={prompt}
-        placeholder="Your image prompt..."
-        onChange={(e) => setPrompt(e.target.value)}
-        onKeyDown={(e) => enter(e, handleChatGpt)}
-      ></Textarea>
-      <Button variant={"outline"} onClick={handleChatGpt}>
-        Get Image
-      </Button>
-      {loading && <Loading />}
-      {aiResult && (
-        <Image alt={"AI Image"} height={1000} width={1000} src={aiResult} />
-      )}
-    </div>
+          <FormField
+            control={form.control}
+            name="resolution"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Resolution</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a resolution" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {resolutionsArray.map((model) => (
+                      <SelectItem key={model} value={model}>
+                        {model}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <FormField
+          control={form.control}
+          name="prompt"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormLabel>Prompt</FormLabel>
+              <FormControl>
+                <Textarea
+                  rows={6}
+                  placeholder="Your image prompt..."
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <Button variant={"outline"} type="submit">
+          Get Image
+        </Button>
+        {loading && <Loading />}
+        {aiResult && (
+          <Image alt={"AI Image"} height={1000} width={1000} src={aiResult} />
+        )}
+      </form>
+    </Form>
   );
 }

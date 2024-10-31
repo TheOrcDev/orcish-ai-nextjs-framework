@@ -4,16 +4,14 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
-import { Button, Loading } from "@/components/ui";
-import { trpc } from "@/server/client";
+import { Button } from "@/components/ui";
+import { getPaymentIntent } from "@/server/tokens";
 
 export default function PaymentSuccess() {
   const searchParams = useSearchParams();
   const [paymentIntentData, setPaymentIntentData] = useState<number | null>(
     null,
   );
-
-  const getPaymentIntent = trpc.tokens.getPaymentIntent.useMutation();
 
   const paymentIntent = searchParams.get("payment_intent");
   const paymentIntentSecret = searchParams.get("payment_intent_client_secret");
@@ -23,10 +21,7 @@ export default function PaymentSuccess() {
       if (!paymentIntent || !paymentIntentSecret) {
         return;
       }
-      const data = await getPaymentIntent.mutateAsync({
-        paymentIntent,
-        paymentIntentSecret,
-      });
+      const data = await getPaymentIntent(paymentIntent, paymentIntentSecret);
 
       setPaymentIntentData(data!);
     };
@@ -38,8 +33,6 @@ export default function PaymentSuccess() {
 
   return (
     <main>
-      {getPaymentIntent.isLoading && <Loading />}
-
       {paymentIntentData && (
         <div className="flex flex-col items-center justify-center gap-5">
           <h2>You have successfully payed {paymentIntentData / 100}$!</h2>

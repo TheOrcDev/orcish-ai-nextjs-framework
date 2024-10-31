@@ -2,10 +2,13 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { UserInfo } from "@/components/features";
+import { getTokens } from "@/server/tokens";
 
 import { ModeToggle } from "../mode-toggle/mode-toggle";
 
-export default function Header() {
+export default async function Header() {
+  const tokens = await getTokens();
+
   return (
     <header className="absolute flex w-full items-center justify-between p-5">
       <Link href={"/"}>
@@ -19,7 +22,7 @@ export default function Header() {
       </Link>
       <div className="flex gap-3">
         <ModeToggle />
-        <UserInfo />
+        <UserInfo tokens={tokens} />
       </div>
     </header>
   );

@@ -2,78 +2,113 @@
 
 import React, { useState } from "react";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
 import { CompletionModel } from "@/components/shared/types";
 import {
   Button,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
   Loading,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
   Textarea,
 } from "@/components/ui";
-import { enter } from "@/lib/events";
-import { trpc } from "@/server/client";
+import { getCompletion } from "@/server/ai";
+
+const formSchema = z.object({
+  prompt: z.string().min(2),
+  model: z.nativeEnum(CompletionModel),
+});
 
 const completionModelsArray = Object.values(CompletionModel);
 
 export default function OpenAICompletion() {
-  const [prompt, setPrompt] = useState<string>("");
-  const [aiResult, setAiResult] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const [selectedCompletionModel, setSelectedCompletionModel] =
-    useState<CompletionModel>(CompletionModel.GPT_3_5_TURBO);
 
-  const getCompletion = trpc.ai.completion.useMutation();
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      prompt: "",
+      model: CompletionModel.GPT_3_5_TURBO,
+    },
+  });
 
-  const handleChatGpt = async () => {
-    try {
-      setLoading(true);
-      const completion = await getCompletion.mutateAsync({
-        prompt,
-        model: selectedCompletionModel,
-      });
-      setLoading(false);
-      setAiResult(completion);
-    } catch (e) {
-      console.error("Error fetching AI completion:", e);
-      setAiResult("Failed to fetch AI completion. Please try again.");
-    }
-  };
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setLoading(true);
+    const completion = await getCompletion(values.prompt, values.model);
+    setLoading(false);
+
+    setAiResult(completion);
+  }
+
+  const [aiResult, setAiResult] = useState<string>("");
 
   return (
-    <div className="flex flex-col items-center gap-3 rounded-xl">
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="outline">{selectedCompletionModel}</Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          {completionModelsArray.map((model) => (
-            <DropdownMenuItem
-              key={model}
-              onClick={() => setSelectedCompletionModel(model)}
-              className={`${
-                selectedCompletionModel === model &&
-                "bg-gray-100 dark:bg-gray-800 dark:text-white"
-              }`}
-            >
-              {model}
-            </DropdownMenuItem>
-          ))}
-        </DropdownMenuContent>
-      </DropdownMenu>
-      <Textarea
-        rows={6}
-        value={prompt}
-        placeholder="Your completion prompt..."
-        onChange={(e) => setPrompt(e.target.value)}
-        onKeyDown={(e) => enter(e, handleChatGpt)}
-      />
-      <Button variant={"outline"} onClick={handleChatGpt}>
-        Get Completion
-      </Button>
-      {loading && <Loading />}
-      {aiResult && <div dangerouslySetInnerHTML={{ __html: aiResult }} />}
-    </div>
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col items-center gap-3 rounded-xl"
+      >
+        <FormField
+          control={form.control}
+          name="model"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Model</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a model" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {completionModelsArray.map((model) => (
+                    <SelectItem key={model} value={model}>
+                      {model}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="prompt"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormLabel>Prompt</FormLabel>
+              <FormControl>
+                <Textarea
+                  rows={6}
+                  placeholder="Your completion prompt..."
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <Button variant={"outline"} type="submit">
+          Get Completion
+        </Button>
+
+        {loading && <Loading />}
+        {aiResult && <div dangerouslySetInnerHTML={{ __html: aiResult }} />}
+      </form>
+    </Form>
   );
 }

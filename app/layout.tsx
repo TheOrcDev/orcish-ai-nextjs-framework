@@ -7,7 +7,7 @@ import "./globals.css";
 
 import { ClerkProvider } from "@clerk/nextjs";
 
-import { ThemeProvider, TRPCProvider } from "@/components/providers";
+import { ThemeProvider } from "@/components/providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,18 +25,16 @@ export default function RootLayout({
     <ClerkProvider>
       <html suppressHydrationWarning lang="en">
         <body className={`${inter.className}`}>
-          <TRPCProvider>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              <div className="fixed inset-0 -z-10 bg-gradient-to-t from-white to-gray-200 dark:from-gray-800 dark:to-black" />
-              {children}
-              <Footer />
-            </ThemeProvider>
-          </TRPCProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <div className="fixed inset-0 -z-10 bg-gradient-to-t from-white to-gray-200 dark:from-gray-800 dark:to-black" />
+            {children}
+            <Footer />
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>

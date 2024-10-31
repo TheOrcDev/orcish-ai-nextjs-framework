@@ -10,34 +10,28 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
-import { Loader2 } from "lucide-react";
 import { useTheme } from "next-themes";
 
 import { Badge, Button, Skeleton } from "@/components/ui";
-import { trpc } from "@/server/client";
 
-export default function UserInfo() {
-  const tokens = trpc.tokens.getTokens.useQuery();
+interface UserInfoProps {
+  tokens: number;
+}
+
+export default function UserInfo({ tokens }: UserInfoProps) {
   const { resolvedTheme } = useTheme();
 
   return (
     <div className="flex items-center gap-2">
       <SignedOut>
-        <Button variant="outline">
+        <Button variant="outline" asChild>
           <SignInButton />
         </Button>
       </SignedOut>
 
       <SignedIn>
         <Link href="/buy-tokens">
-          <Badge className="flex items-center text-base">
-            {tokens.isLoading ? (
-              <Loader2 className="mr-2 animate-spin" />
-            ) : (
-              tokens?.data
-            )}{" "}
-            tokens
-          </Badge>
+          <Badge className="flex items-center text-base">{tokens} tokens</Badge>
         </Link>
         <ClerkLoading>
           <Skeleton className="size-8 rounded-full" />
