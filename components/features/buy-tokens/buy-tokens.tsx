@@ -15,7 +15,6 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-  Loading,
 } from "@/components/ui";
 import getStripe from "@/lib/stripe";
 import { getClientSecret } from "@/server/tokens";
