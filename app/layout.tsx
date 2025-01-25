@@ -31,7 +31,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <div className="fixed inset-0 -z-10 bg-gradient-to-t from-white to-gray-200 dark:from-gray-800 dark:to-black" />
+            <div className="fixed inset-0 -z-10 bg-linear-to-t from-white to-gray-200 dark:from-gray-800 dark:to-black" />
             {children}
             <Footer />
           </ThemeProvider>
