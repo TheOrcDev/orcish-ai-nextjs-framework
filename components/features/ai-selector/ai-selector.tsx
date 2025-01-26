@@ -14,7 +14,7 @@ const methods = Object.values(Method);
 
 export default function AISelector() {
   const [methodSelected, setMethodSelected] = useState<Method>(
-    Method.Completion,
+    Method.Completion
   );
 
   return (

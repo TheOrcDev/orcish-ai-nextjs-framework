@@ -1,7 +1,5 @@
 "use client";
 
-import Link from "next/link";
-
 import {
   ClerkLoading,
   SignedIn,
@@ -10,6 +8,7 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
+import Link from "next/link";
 import { useTheme } from "next-themes";
 
 import { Badge, Button, Skeleton } from "@/components/ui";

@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-
 import { zodResolver } from "@hookform/resolvers/zod";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -49,7 +48,7 @@ export default function OpenAIImage() {
     const tts = await getTextToSpeech(
       values.prompt,
       values.model,
-      values.voice,
+      values.voice
     );
     setAiResult(tts);
     setLoading(false);

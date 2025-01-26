@@ -1,10 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
-
 import { CheckCircledIcon } from "@radix-ui/react-icons";
 import { Elements } from "@stripe/react-stripe-js";
 import { useTheme } from "next-themes";
+import React, { useState } from "react";
 
 import { Tokens } from "@/components/shared/types";
 import {

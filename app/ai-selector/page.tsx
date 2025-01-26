@@ -1,6 +1,5 @@
-import Link from "next/link";
-
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
+import Link from "next/link";
 
 import { AISelector } from "@/components/features";
 import { Button, Header } from "@/components/ui";

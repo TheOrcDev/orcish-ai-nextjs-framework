@@ -1,7 +1,6 @@
-import Link from "next/link";
-
 import { SignedIn } from "@clerk/nextjs";
 import { ArrowRightIcon } from "@radix-ui/react-icons";
+import Link from "next/link";
 
 import { Button, Header } from "@/components/ui";
 
