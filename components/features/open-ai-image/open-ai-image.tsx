@@ -52,6 +52,8 @@ export default function OpenAIImage() {
       values.model,
       values.resolution,
     );
+
+    console.log(image);
     setAiResult(image);
     setLoading(false);
   }
@@ -146,7 +148,12 @@ export default function OpenAIImage() {
         </Button>
         {loading && <Loading />}
         {aiResult && (
-          <Image alt={"AI Image"} height={1000} width={1000} src={aiResult} />
+          <Image
+            alt={"AI Image"}
+            height={1000}
+            width={1000}
+            src={`data:image/jpeg;base64,${aiResult}`}
+          />
         )}
       </form>
     </Form>

@@ -5,7 +5,7 @@ import path from "path";
 
 import { openai } from "@ai-sdk/openai";
 import { currentUser } from "@clerk/nextjs/server";
-import { generateText } from "ai";
+import { experimental_generateImage as generateImage, generateText } from "ai";
 
 import {
   CompletionModel,
@@ -67,9 +67,10 @@ export async function getImage(
       return "Not enough tokens";
     }
 
-    const image = await orcishOpenAIService.getDalle3Image(prompt, {
-      imageModel: model,
-      imageResolution: resolution,
+    const { image } = await generateImage({
+      model: openai.image(model),
+      prompt,
+      size: resolution,
     });
 
     await db.insert(tokenSpends).values({
@@ -78,7 +79,7 @@ export async function getImage(
       action: "image",
     });
 
-    return image;
+    return image.base64;
   } catch (e) {
     throw e;
   }
