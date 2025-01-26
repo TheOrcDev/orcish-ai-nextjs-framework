@@ -9,7 +9,7 @@ import db from "@/db/drizzle";
 import { purchases, tokenSpends } from "@/db/schema";
 import { getTotalTokens } from "@/lib/queries";
 
-const STRIPE_API_VERSION = "2024-11-20.acacia";
+const STRIPE_API_VERSION = "2024-12-18.acacia";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   typescript: true,
