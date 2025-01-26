@@ -6,6 +6,7 @@ import path from "path";
 import { openai } from "@ai-sdk/openai";
 import { currentUser } from "@clerk/nextjs/server";
 import { experimental_generateImage as generateImage, generateText } from "ai";
+import { OrcishOpenAIService } from "orcish-openai-connector";
 
 import {
   CompletionModel,
@@ -22,6 +23,11 @@ import { createFileName } from "@/lib/utils";
 if (!process.env.OPENAI_API_KEY) {
   throw "No OpenAI API Key";
 }
+
+const orcishOpenAIService = new OrcishOpenAIService({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
 export async function getCompletion(prompt: string, model: CompletionModel) {
   const user = await currentUser();
 
