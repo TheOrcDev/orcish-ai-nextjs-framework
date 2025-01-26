@@ -50,7 +50,7 @@ export default function OpenAIImage() {
     const image = await getImage(
       values.prompt,
       values.model,
-      values.resolution,
+      values.resolution
     );
 
     console.log(image);

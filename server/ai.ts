@@ -33,7 +33,7 @@ export async function getCompletion(prompt: string, model: CompletionModel) {
 
   try {
     const totalUserTokens = await getTotalTokens(
-      user?.emailAddresses[0].emailAddress!,
+      user?.emailAddresses[0].emailAddress!
     );
 
     if (totalUserTokens <= 0) {
@@ -60,13 +60,13 @@ export async function getCompletion(prompt: string, model: CompletionModel) {
 export async function getImage(
   prompt: string,
   model: ImageModel,
-  resolution: Resolution,
+  resolution: Resolution
 ) {
   const user = await currentUser();
 
   try {
     const totalUserTokens = await getTotalTokens(
-      user?.emailAddresses[0].emailAddress!,
+      user?.emailAddresses[0].emailAddress!
     );
 
     if (totalUserTokens <= 0) {
@@ -94,13 +94,13 @@ export async function getImage(
 export async function getTextToSpeech(
   prompt: string,
   model: VoiceModel,
-  voice: Voice,
+  voice: Voice
 ) {
   const user = await currentUser();
 
   try {
     const totalUserTokens = await getTotalTokens(
-      user?.emailAddresses[0].emailAddress!,
+      user?.emailAddresses[0].emailAddress!
     );
 
     if (totalUserTokens <= 0) {
