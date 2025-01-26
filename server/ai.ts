@@ -3,10 +3,12 @@
 import * as fs from "fs";
 import path from "path";
 
+import { openai } from "@ai-sdk/openai";
 import { currentUser } from "@clerk/nextjs/server";
-import { OrcishOpenAIService } from "orcish-openai-connector";
+import { generateText } from "ai";
 
 import {
+  CompletionModel,
   ImageModel,
   Resolution,
   Voice,
@@ -20,11 +22,6 @@ import { createFileName } from "@/lib/utils";
 if (!process.env.OPENAI_API_KEY) {
   throw "No OpenAI API Key";
 }
-
-const orcishOpenAIService = new OrcishOpenAIService({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 export async function getCompletion(prompt: string, model: CompletionModel) {
   const user = await currentUser();
 
@@ -37,8 +34,9 @@ export async function getCompletion(prompt: string, model: CompletionModel) {
       return "Not enough tokens";
     }
 
-    const result = await orcishOpenAIService.getChatGPTCompletion(prompt, {
-      gptModel: model,
+    const { text } = await generateText({
+      model: openai(model),
+      prompt,
     });
 
     await db.insert(tokenSpends).values({
@@ -47,7 +45,7 @@ export async function getCompletion(prompt: string, model: CompletionModel) {
       action: "completion",
     });
 
-    return result;
+    return text;
   } catch (e) {
     throw e;
   }
