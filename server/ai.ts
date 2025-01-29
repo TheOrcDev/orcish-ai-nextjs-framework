@@ -8,16 +8,17 @@ import { OrcishOpenAIService } from "orcish-openai-connector";
 import path from "path";
 
 import {
-  CompletionModel,
   ImageModel,
   Resolution,
   Voice,
-  VoiceModel,
+  VoiceModel
 } from "@/components/shared/types";
 import db from "@/db/drizzle";
 import { tokenSpends } from "@/db/schema";
 import { getTotalTokens } from "@/lib/queries";
 import { createFileName } from "@/lib/utils";
+
+import { completionSchema } from "./schemas";
 
 if (!process.env.OPENAI_API_KEY) {
   throw "No OpenAI API Key";
@@ -27,8 +28,27 @@ const orcishOpenAIService = new OrcishOpenAIService({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-export async function getCompletion(prompt: string, model: CompletionModel) {
+export async function getCompletion(_: unknown, formData: FormData): Promise<{
+  errors: Record<string, string[]>;
+  values: Record<string, string>;
+}> {
   const user = await currentUser();
+
+  const formValues = {
+    prompt: formData.get("prompt"),
+    model: formData.get("model"),
+  };
+
+  const { success, error, data } = completionSchema.safeParse(formValues);
+
+  if (!success) {
+    return {
+      errors: error.flatten().fieldErrors,
+      values: {},
+    }
+  }
+
+  const { prompt, model } = data;
 
   try {
     const totalUserTokens = await getTotalTokens(
@@ -36,7 +56,12 @@ export async function getCompletion(prompt: string, model: CompletionModel) {
     );
 
     if (totalUserTokens <= 0) {
-      return "Not enough tokens";
+      return {
+        errors: {},
+        values: {
+          text: "Not enough tokens",
+        },
+      };
     }
 
     const { text } = await generateText({
@@ -50,7 +75,12 @@ export async function getCompletion(prompt: string, model: CompletionModel) {
       action: "completion",
     });
 
-    return text;
+    return {
+      errors: {},
+      values: {
+        text,
+      },
+    };
   } catch (e) {
     throw e;
   }
