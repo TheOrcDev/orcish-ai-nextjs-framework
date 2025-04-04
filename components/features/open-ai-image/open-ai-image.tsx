@@ -1,5 +1,6 @@
 "use client";
 
+import { Loader2 } from "lucide-react";
 import Image from "next/image";
 import React, { useActionState } from "react";
 
@@ -58,10 +59,8 @@ export default function OpenAIImage() {
       <Textarea rows={6} placeholder="Your image prompt..." name="prompt" />
 
       <Button variant={"outline"} type="submit">
-        Get Image
+        {isLoading ? <Loader2 className="size-4 animate-spin" /> : "Get Image"}
       </Button>
-
-      {isLoading && <Loading />}
 
       {imageResult && (
         <Image
