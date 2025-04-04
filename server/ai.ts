@@ -8,8 +8,6 @@ import { OrcishOpenAIService } from "orcish-openai-connector";
 import path from "path";
 
 import {
-  ImageModel,
-  Resolution,
   Voice,
   VoiceModel
 } from "@/components/shared/types";
@@ -18,7 +16,7 @@ import { tokenSpends } from "@/db/schema";
 import { getTotalTokens } from "@/lib/queries";
 import { createFileName } from "@/lib/utils";
 
-import { completionSchema } from "./schemas";
+import { completionSchema, imageSchema } from "./schemas";
 
 if (!process.env.OPENAI_API_KEY) {
   throw "No OpenAI API Key";
@@ -86,12 +84,29 @@ export async function getCompletion(_: unknown, formData: FormData): Promise<{
   }
 }
 
-export async function getImage(
-  prompt: string,
-  model: ImageModel,
-  resolution: Resolution
-) {
+export async function getImage(_: unknown, formData: FormData): Promise<{
+  errors: Record<string, string[]>;
+  values: Record<string, string>;
+}> {
   const user = await currentUser();
+
+  const formValues = {
+    prompt: formData.get("prompt"),
+    model: formData.get("model"),
+    resolution: formData.get("resolution"),
+  };
+
+  const { success, error, data } = imageSchema.safeParse(formValues);
+
+  if (!success) {
+    return {
+      errors: error.flatten().fieldErrors,
+      values: {},
+    }
+  }
+
+  const { prompt, model, resolution } = data;
+
 
   try {
     const totalUserTokens = await getTotalTokens(
@@ -99,7 +114,12 @@ export async function getImage(
     );
 
     if (totalUserTokens <= 0) {
-      return "Not enough tokens";
+      return {
+        errors: {},
+        values: {
+          text: "Not enough tokens",
+        },
+      };
     }
 
     const { image } = await generateImage({
@@ -114,7 +134,13 @@ export async function getImage(
       action: "image",
     });
 
-    return image.base64;
+    console.log(image);
+    return {
+      errors: {},
+      values: {
+        image: image.base64,
+      },
+    };
   } catch (e) {
     throw e;
   }

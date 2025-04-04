@@ -1,20 +1,11 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import React, { useActionState } from "react";
 
 import { ImageModel, Resolution } from "@/components/shared/types";
 import {
   Button,
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
   Loading,
   Select,
   SelectContent,
@@ -28,133 +19,58 @@ import { getImage } from "@/server/ai";
 const imageModelsArray = Object.values(ImageModel);
 const resolutionsArray = Object.values(Resolution);
 
-const formSchema = z.object({
-  prompt: z.string().min(2),
-  model: z.nativeEnum(ImageModel),
-  resolution: z.nativeEnum(Resolution),
-});
-
 export default function OpenAIImage() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      prompt: "",
-      model: ImageModel.DALL_E_3,
-      resolution: Resolution.LANDSCAPE,
-    },
-  });
-
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    setLoading(true);
-    const image = await getImage(
-      values.prompt,
-      values.model,
-      values.resolution
-    );
-
-    console.log(image);
-    setAiResult(image);
-    setLoading(false);
-  }
-
-  const [aiResult, setAiResult] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
+  const [imageResult, formAction, isLoading] = useActionState(getImage, null);
 
   return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col items-center gap-3 rounded-xl"
-      >
-        <div className="flex gap-2">
-          <FormField
-            control={form.control}
-            name="model"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Model</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a model" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {imageModelsArray.map((model) => (
-                      <SelectItem key={model} value={model}>
-                        {model}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+    <form
+      action={formAction}
+      className="flex flex-col items-center gap-3 rounded-xl"
+    >
+      <div className="flex gap-2">
+        <Select defaultValue={ImageModel.DALL_E_3} name="model">
+          <SelectTrigger>
+            <SelectValue placeholder="Select a model" />
+          </SelectTrigger>
+          <SelectContent>
+            {imageModelsArray.map((model) => (
+              <SelectItem key={model} value={model}>
+                {model}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
 
-          <FormField
-            control={form.control}
-            name="resolution"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Resolution</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a resolution" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {resolutionsArray.map((model) => (
-                      <SelectItem key={model} value={model}>
-                        {model}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
+        <Select defaultValue={Resolution.LANDSCAPE} name="resolution">
+          <SelectTrigger>
+            <SelectValue placeholder="Select a resolution" />
+          </SelectTrigger>
+          <SelectContent>
+            {resolutionsArray.map((model) => (
+              <SelectItem key={model} value={model}>
+                {model}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
 
-        <FormField
-          control={form.control}
-          name="prompt"
-          render={({ field }) => (
-            <FormItem className="w-full">
-              <FormLabel>Prompt</FormLabel>
-              <FormControl>
-                <Textarea
-                  rows={6}
-                  placeholder="Your image prompt..."
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+      <Textarea rows={6} placeholder="Your image prompt..." name="prompt" />
+
+      <Button variant={"outline"} type="submit">
+        Get Image
+      </Button>
+
+      {isLoading && <Loading />}
+
+      {imageResult && (
+        <Image
+          alt={"AI Image"}
+          height={1000}
+          width={1000}
+          src={`data:image/jpeg;base64,${imageResult.values.image}`}
         />
-
-        <Button variant={"outline"} type="submit">
-          Get Image
-        </Button>
-        {loading && <Loading />}
-        {aiResult && (
-          <Image
-            alt={"AI Image"}
-            height={1000}
-            width={1000}
-            src={`data:image/jpeg;base64,${aiResult}`}
-          />
-        )}
-      </form>
-    </Form>
+      )}
+    </form>
   );
 }
