@@ -6,8 +6,8 @@ export { default as Footer } from "./footer/footer";
 export * from "./form/form";
 export { default as Header } from "./header/header";
 export { Input } from "./input/input";
-export { default as Loading } from "./loading/loading";
 export { ModeToggle } from "./mode-toggle/mode-toggle";
 export * from "./select/select";
 export { Skeleton } from "./skeleton/skeleton";
 export { Textarea } from "./textarea/textarea";
+

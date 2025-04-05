@@ -7,7 +7,6 @@ import React, { useActionState } from "react";
 import { ImageModel, Resolution } from "@/components/shared/types";
 import {
   Button,
-  Loading,
   Select,
   SelectContent,
   SelectItem,
