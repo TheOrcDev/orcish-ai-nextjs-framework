@@ -5,7 +5,6 @@ import { Elements } from "@stripe/react-stripe-js";
 import { useTheme } from "next-themes";
 import React, { useState } from "react";
 
-import { Tokens } from "@/components/shared/types";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -16,6 +15,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import getStripe from "@/lib/stripe";
+import { Tokens } from "@/lib/types";
 import { getClientSecret } from "@/server/tokens";
 
 import PaymentForm from "./payment-form";

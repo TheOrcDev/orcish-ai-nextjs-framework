@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { CompletionModel, ImageModel, Resolution } from "@/components/shared/types";
+import { CompletionModel, ImageModel, Resolution } from "@/lib/types";
 
 export const completionSchema = z.object({
     prompt: z.string().min(2),

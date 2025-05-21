@@ -7,8 +7,8 @@ import {
   OpenAIImage,
   TextToSpeech,
 } from "@/components/features";
-import { Method } from "@/components/shared/types";
 import { Button } from "@/components/ui/button";
+import { Method } from "@/lib/types";
 
 const methods = Object.values(Method);
 

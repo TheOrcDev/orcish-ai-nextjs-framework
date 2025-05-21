@@ -3,7 +3,6 @@
 import { Loader2 } from "lucide-react";
 import React, { useActionState } from "react";
 
-import { CompletionModel } from "@/components/shared/types";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import {
@@ -14,6 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { CompletionModel } from "@/lib/types";
 import { getCompletion } from "@/server/ai";
 
 const completionModelsArray = Object.values(CompletionModel);

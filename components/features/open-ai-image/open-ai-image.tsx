@@ -4,7 +4,6 @@ import { Loader2 } from "lucide-react";
 import Image from "next/image";
 import React, { useActionState } from "react";
 
-import { ImageModel, Resolution } from "@/components/shared/types";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -14,6 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { ImageModel, Resolution } from "@/lib/types";
 import { getImage } from "@/server/ai";
 
 const imageModelsArray = Object.values(ImageModel);

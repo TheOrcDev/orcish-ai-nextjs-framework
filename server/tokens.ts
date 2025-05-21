@@ -4,11 +4,11 @@ import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import Stripe from "stripe";
 
-import { Tokens } from "@/components/shared/types";
 import db from "@/db/drizzle";
 import { purchases, tokenSpends } from "@/db/schema";
 import { auth } from "@/lib/auth";
 import { getTotalTokens } from "@/lib/queries";
+import { Tokens } from "@/lib/types";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   typescript: true,
