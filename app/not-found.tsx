@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
-import { Button } from "@/components/ui";
+import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: "404 | OrcDev",

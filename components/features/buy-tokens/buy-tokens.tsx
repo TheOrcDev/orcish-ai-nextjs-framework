@@ -6,15 +6,15 @@ import { useTheme } from "next-themes";
 import React, { useState } from "react";
 
 import { Tokens } from "@/components/shared/types";
+import { Button } from "@/components/ui/button";
 import {
-  Button,
   Card,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui";
+} from "@/components/ui/card";
 import getStripe from "@/lib/stripe";
 import { getClientSecret } from "@/server/tokens";
 

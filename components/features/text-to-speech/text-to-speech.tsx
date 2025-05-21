@@ -7,22 +7,23 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Voice, VoiceModel } from "@/components/shared/types";
+import { Button } from "@/components/ui/button";
 import {
-  Button,
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-  Loading,
+} from "@/components/ui/form";
+import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-  Textarea,
-} from "@/components/ui";
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { getTextToSpeech } from "@/server/ai";
 
 const voiceModelsArray = Object.values(VoiceModel);

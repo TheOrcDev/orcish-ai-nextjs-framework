@@ -4,16 +4,16 @@ import { Loader2 } from "lucide-react";
 import React, { useActionState } from "react";
 
 import { CompletionModel } from "@/components/shared/types";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import {
-  Button,
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-  Textarea,
-} from "@/components/ui";
-import { Label } from "@/components/ui/label/label";
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { getCompletion } from "@/server/ai";
 
 const completionModelsArray = Object.values(CompletionModel);

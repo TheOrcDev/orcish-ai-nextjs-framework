@@ -10,10 +10,9 @@ import { ModeSwitcher } from "@/components/mode-switcher";
 import { auth } from "@/lib/auth";
 import { getTokens } from "@/server/tokens";
 
-import { Button } from "../button";
-import { ModeToggle } from "../mode-toggle/mode-toggle";
+import { Button } from "./button";
 
-export default async function Header() {
+export async function Header() {
   const session = await auth.api.getSession({
     headers: await headers(),
   });

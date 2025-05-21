@@ -1,7 +1,8 @@
 import { ArrowRightIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 
-import { Button, Header } from "@/components/ui";
+import { Button } from "@/components/ui/button";
+import { Header } from "@/components/ui/header";
 
 export default function Home() {
   return (

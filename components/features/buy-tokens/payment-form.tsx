@@ -7,7 +7,7 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 
-import { Button } from "@/components/ui";
+import { Button } from "@/components/ui/button";
 
 interface Props {
   back: () => void;

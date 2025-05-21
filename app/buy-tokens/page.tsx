@@ -1,5 +1,5 @@
 import { BuyTokens } from "@/components/features";
-import { Header } from "@/components/ui";
+import { Header } from "@/components/ui/header";
 
 export default async function BuyTokensPage() {
   return (

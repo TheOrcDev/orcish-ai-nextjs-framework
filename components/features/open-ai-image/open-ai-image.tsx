@@ -5,15 +5,15 @@ import Image from "next/image";
 import React, { useActionState } from "react";
 
 import { ImageModel, Resolution } from "@/components/shared/types";
+import { Button } from "@/components/ui/button";
 import {
-  Button,
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-  Textarea,
-} from "@/components/ui";
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { getImage } from "@/server/ai";
 
 const imageModelsArray = Object.values(ImageModel);

@@ -8,7 +8,7 @@ import {
   TextToSpeech,
 } from "@/components/features";
 import { Method } from "@/components/shared/types";
-import { Button } from "@/components/ui";
+import { Button } from "@/components/ui/button";
 
 const methods = Object.values(Method);
 
