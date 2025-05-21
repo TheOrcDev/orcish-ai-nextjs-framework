@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { UserInfo } from "@/components/features";
+import { ModeSwitcher } from "@/components/mode-switcher";
 import { auth } from "@/lib/auth";
 import { getTokens } from "@/server/tokens";
 
@@ -30,7 +31,8 @@ export default async function Header() {
         />
       </Link>
       <div className="flex gap-3">
-        <ModeToggle />
+        <ModeSwitcher />
+
         {session?.user ? (
           <UserInfo tokens={tokens} />
         ) : (

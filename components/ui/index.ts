@@ -6,7 +6,6 @@ export { default as Footer } from "./footer/footer";
 export * from "./form/form";
 export { default as Header } from "./header/header";
 export { Input } from "./input/input";
-export { ModeToggle } from "./mode-toggle/mode-toggle";
 export * from "./select/select";
 export { Skeleton } from "./skeleton/skeleton";
 export { Textarea } from "./textarea/textarea";
