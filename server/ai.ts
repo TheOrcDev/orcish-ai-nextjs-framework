@@ -7,14 +7,14 @@ import { headers } from "next/headers";
 import { OrcishOpenAIService } from "orcish-openai-connector";
 import path from "path";
 
-import {
-  Voice,
-  VoiceModel
-} from "@/components/shared/types";
 import db from "@/db/drizzle";
 import { tokenSpends } from "@/db/schema";
 import { auth } from "@/lib/auth";
 import { getTotalTokens } from "@/lib/queries";
+import {
+  Voice,
+  VoiceModel
+} from "@/lib/types";
 import { createFileName } from "@/lib/utils";
 
 import { completionSchema, imageSchema } from "./schemas";
