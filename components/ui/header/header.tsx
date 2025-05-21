@@ -1,12 +1,21 @@
+"use server";
+
+import { LogIn } from "lucide-react";
+import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 
 import { UserInfo } from "@/components/features";
+import { auth } from "@/lib/auth";
 import { getTokens } from "@/server/tokens";
 
+import { Button } from "../button";
 import { ModeToggle } from "../mode-toggle/mode-toggle";
 
 export default async function Header() {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
   const tokens = await getTokens();
 
   return (
@@ -22,7 +31,16 @@ export default async function Header() {
       </Link>
       <div className="flex gap-3">
         <ModeToggle />
-        <UserInfo tokens={tokens} />
+        {session?.user ? (
+          <UserInfo tokens={tokens} />
+        ) : (
+          <Link href="/login">
+            <Button variant="outline">
+              <LogIn className="size-5" />
+              Login
+            </Button>
+          </Link>
+        )}
       </div>
     </header>
   );

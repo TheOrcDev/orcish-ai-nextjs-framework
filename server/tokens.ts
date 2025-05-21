@@ -1,19 +1,17 @@
 "use server";
 
-import { currentUser } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
+import { headers } from "next/headers";
 import Stripe from "stripe";
 
 import { Tokens } from "@/components/shared/types";
 import db from "@/db/drizzle";
 import { purchases, tokenSpends } from "@/db/schema";
+import { auth } from "@/lib/auth";
 import { getTotalTokens } from "@/lib/queries";
-
-const STRIPE_API_VERSION = "2024-12-18.acacia";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   typescript: true,
-  apiVersion: STRIPE_API_VERSION,
 });
 
 const priceMap = {
@@ -32,11 +30,13 @@ const getTokenByPrice = (price: number) => {
 };
 
 export async function getTokens() {
-  const user = await currentUser();
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
   try {
     const totalUserTokens = await getTotalTokens(
-      user?.emailAddresses[0].emailAddress!,
+      session?.user?.email!,
     );
 
     return totalUserTokens;
@@ -65,7 +65,9 @@ export async function getPaymentIntent(
   paymentIntentSecret: string,
 ) {
   try {
-    const user = await currentUser();
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
 
     const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
 
@@ -76,14 +78,13 @@ export async function getPaymentIntent(
         .where(eq(purchases.paymentIntentSecret, paymentIntentSecret));
 
       if (existingRecord) {
-        console.log("Already saved");
         return existingRecord.amount;
       }
 
       const amountOfTokens = getTokenByPrice(paymentIntent.amount / 100);
 
       await db.insert(purchases).values({
-        email: user?.emailAddresses[0].emailAddress!,
+        email: session?.user?.email!,
         paymentIntent: paymentIntentId,
         paymentIntentSecret: paymentIntentSecret,
         amount: +amountOfTokens,

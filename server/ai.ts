@@ -1,9 +1,9 @@
 "use server";
 
 import { openai } from "@ai-sdk/openai";
-import { currentUser } from "@clerk/nextjs/server";
 import { experimental_generateImage as generateImage, generateText } from "ai";
 import * as fs from "fs";
+import { headers } from "next/headers";
 import { OrcishOpenAIService } from "orcish-openai-connector";
 import path from "path";
 
@@ -13,6 +13,7 @@ import {
 } from "@/components/shared/types";
 import db from "@/db/drizzle";
 import { tokenSpends } from "@/db/schema";
+import { auth } from "@/lib/auth";
 import { getTotalTokens } from "@/lib/queries";
 import { createFileName } from "@/lib/utils";
 
@@ -30,7 +31,9 @@ export async function getCompletion(_: unknown, formData: FormData): Promise<{
   errors: Record<string, string[]>;
   values: Record<string, string>;
 }> {
-  const user = await currentUser();
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
   const formValues = {
     prompt: formData.get("prompt"),
@@ -50,7 +53,7 @@ export async function getCompletion(_: unknown, formData: FormData): Promise<{
 
   try {
     const totalUserTokens = await getTotalTokens(
-      user?.emailAddresses[0].emailAddress!
+      session?.user?.email!
     );
 
     if (totalUserTokens <= 0) {
@@ -69,7 +72,7 @@ export async function getCompletion(_: unknown, formData: FormData): Promise<{
 
     await db.insert(tokenSpends).values({
       amount: 1,
-      email: user?.emailAddresses[0].emailAddress!,
+      email: session?.user?.email!,
       action: "completion",
     });
 
@@ -88,7 +91,9 @@ export async function getImage(_: unknown, formData: FormData): Promise<{
   errors: Record<string, string[]>;
   values: Record<string, string>;
 }> {
-  const user = await currentUser();
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
   const formValues = {
     prompt: formData.get("prompt"),
@@ -110,7 +115,7 @@ export async function getImage(_: unknown, formData: FormData): Promise<{
 
   try {
     const totalUserTokens = await getTotalTokens(
-      user?.emailAddresses[0].emailAddress!
+      session?.user?.email!
     );
 
     if (totalUserTokens <= 0) {
@@ -130,11 +135,10 @@ export async function getImage(_: unknown, formData: FormData): Promise<{
 
     await db.insert(tokenSpends).values({
       amount: 1,
-      email: user?.emailAddresses[0].emailAddress!,
+      email: session?.user?.email!,
       action: "image",
     });
 
-    console.log(image);
     return {
       errors: {},
       values: {
@@ -151,11 +155,13 @@ export async function getTextToSpeech(
   model: VoiceModel,
   voice: Voice
 ) {
-  const user = await currentUser();
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
   try {
     const totalUserTokens = await getTotalTokens(
-      user?.emailAddresses[0].emailAddress!
+      session?.user?.email!
     );
 
     if (totalUserTokens <= 0) {
@@ -179,7 +185,7 @@ export async function getTextToSpeech(
 
     await db.insert(tokenSpends).values({
       amount: 1,
-      email: user?.emailAddresses[0].emailAddress!,
+      email: session?.user?.email!,
       action: "image",
     });
 
