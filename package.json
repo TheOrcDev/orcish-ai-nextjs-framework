@@ -40,7 +40,7 @@
     "stripe": "^18.1.1",
     "tailwind-merge": "^3.3.0",
     "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.25.17"
+    "zod": "^3.25.28"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.7",
@@ -50,7 +50,7 @@
     "@typescript-eslint/parser": "^8.32.1",
     "drizzle-kit": "^0.31.1",
     "eslint": "^9.27.0",
-    "eslint-config-next": "15.3.2",
+    "eslint-config-next": "15.4.0-canary.51",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "husky": "^9.1.7",
     "postcss": "^8.5.3",
