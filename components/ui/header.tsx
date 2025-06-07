@@ -37,7 +37,7 @@ export async function Header() {
         ) : (
           <Link href="/login">
             <Button variant="outline">
-              <LogIn className="size-5" />
+              <LogIn className="size-4 mr-2" />
               Login
             </Button>
           </Link>
