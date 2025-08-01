@@ -1,10 +1,14 @@
-import { getSessionCookie } from "better-auth/cookies";
+import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function middleware(request: NextRequest) {
-  const sessionCookie = getSessionCookie(request);
+import { auth } from "@/lib/auth";
 
-  if (!sessionCookie) {
+export async function middleware(request: NextRequest) {
+  const session = await auth.api.getSession({
+    headers: await headers()
+  })
+
+  if (!session) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
@@ -12,5 +16,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/ai-selector(.*)", "/buy-tokens(.*)", "/order-complete(.*)"],
+  matcher: ["/ai-selector", "/buy-tokens", "/order-complete"],
 };

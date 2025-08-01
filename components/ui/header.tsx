@@ -1,5 +1,3 @@
-"use server";
-
 import { LogIn } from "lucide-react";
 import { headers } from "next/headers";
 import Image from "next/image";
@@ -16,6 +14,7 @@ export async function Header() {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
+
   const tokens = await getTokens();
 
   return (
@@ -29,7 +28,7 @@ export async function Header() {
           priority
         />
       </Link>
-      <div className="flex gap-3">
+      <div className="flex">
         <ModeSwitcher />
 
         {session?.user ? (
