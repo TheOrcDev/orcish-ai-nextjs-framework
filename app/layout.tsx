@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 
 import { ThemeProvider } from "@/components/theme-provider";
 import { Footer } from "@/components/ui/footer";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,6 +31,7 @@ export default function RootLayout({
           <div className="fixed inset-0 -z-10 bg-linear-to-t from-white to-gray-200 dark:from-gray-800 dark:to-black" />
           {children}
           <Footer />
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

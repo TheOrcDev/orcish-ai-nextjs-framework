@@ -15,16 +15,11 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { signUp } from "@/server/users";
 
 export function SignupForm() {
   const [signUpResult, formAction, isLoading] = useActionState(signUp, null);
 
   const router = useRouter();
-
-  if (signUpResult?.redirect) {
-    router.push(signUpResult.redirect);
-  }
 
   return (
     <Card>

@@ -1,9 +1,13 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -13,19 +17,28 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { authClient } from "@/lib/auth.client";
-import { signIn } from "@/server/users";
+import { signIn, signInUser } from "@/server/users";
+
+const formSchema = z.object({
+  email: z.email(),
+  password: z.string().min(8),
+});
 
 export function LoginForm() {
-  const [loginResult, formAction, isLoading] = useActionState(signIn, null);
-
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-
-  if (loginResult?.redirect) {
-    router.push(loginResult.redirect);
-  }
 
   const handleLoginWithGoogle = async () => {
     await authClient.signIn.social({
@@ -34,6 +47,31 @@ export function LoginForm() {
     });
   };
 
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      setIsLoading(true);
+      const response = await signInUser(values.email, values.password);
+      if (response.success) {
+        toast.success(response.message);
+        router.push("/ai-selector");
+      } else {
+        toast.error(response.message);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   return (
     <Card>
       <CardHeader className="text-center">
@@ -41,8 +79,8 @@ export function LoginForm() {
         <CardDescription>Login with your Google account</CardDescription>
       </CardHeader>
       <CardContent>
-        <form action={formAction}>
-          <div className="grid gap-6">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <div className="flex flex-col gap-4">
               <Button
                 variant="outline"
@@ -69,37 +107,37 @@ export function LoginForm() {
               </span>
             </div>
             <div className="grid gap-6">
-              <div className="grid gap-3">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  name="email"
-                  placeholder="m@example.com"
-                  required
-                />
-              </div>
-              <div className="grid gap-3">
-                <div className="flex items-center">
-                  <Label htmlFor="password">Password</Label>
-                  <a
-                    href="#"
-                    className="ml-auto text-sm underline-offset-4 hover:underline"
-                  >
-                    Forgot your password?
-                  </a>
-                </div>
-                <Input id="password" type="password" name="password" required />
-                <div className="text-center h-6">
-                  {loginResult?.errors && (
-                    <p className="text-destructive">
-                      {loginResult.errors.message}
-                    </p>
-                  )}
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input placeholder="m@example.com" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="password"
+                        placeholder="********"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-                  {loginResult?.values && <p>{loginResult.values.text}</p>}
-                </div>
-              </div>
               <Button type="submit" disabled={isLoading} className="w-full">
                 {isLoading ? (
                   <Loader2 className="size-4 animate-spin" />
@@ -114,8 +152,8 @@ export function LoginForm() {
                 Sign up
               </Link>
             </div>
-          </div>
-        </form>
+          </form>
+        </Form>
       </CardContent>
     </Card>
   );
