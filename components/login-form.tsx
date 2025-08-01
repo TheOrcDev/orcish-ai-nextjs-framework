@@ -104,7 +104,7 @@ export function LoginForm() {
                 Or continue with
               </span>
             </div>
-            <div className="grid gap-6">
+            <div className="grid gap-4">
               <FormField
                 control={form.control}
                 name="email"
