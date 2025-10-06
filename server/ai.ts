@@ -1,9 +1,9 @@
 "use server";
 
-import { openai } from "@ai-sdk/openai";
 import { experimental_generateImage as generateImage, generateText } from "ai";
 import * as fs from "fs";
 import { headers } from "next/headers";
+import OpenAI from 'openai';
 import { OrcishOpenAIService } from "orcish-openai-connector";
 import path from "path";
 
@@ -23,9 +23,12 @@ if (!process.env.OPENAI_API_KEY) {
   throw "No OpenAI API Key";
 }
 
+
 const orcishOpenAIService = new OrcishOpenAIService({
   apiKey: process.env.OPENAI_API_KEY,
 });
+
+const openai = new OpenAI();
 
 export async function getCompletion(_: unknown, formData: FormData): Promise<{
   errors: Record<string, string[]>;
@@ -114,18 +117,18 @@ export async function getImage(_: unknown, formData: FormData): Promise<{
 
 
   try {
-    const totalUserTokens = await getTotalTokens(
-      session?.user?.email!
-    );
+    // const totalUserTokens = await getTotalTokens(
+    //   session?.user?.email!
+    // );
 
-    if (totalUserTokens <= 0) {
-      return {
-        errors: {},
-        values: {
-          text: "Not enough tokens",
-        },
-      };
-    }
+    // if (totalUserTokens <= 0) {
+    //   return {
+    //     errors: {},
+    //     values: {
+    //       text: "Not enough tokens",
+    //     },
+    //   };
+    // }
 
     const { image } = await generateImage({
       model: openai.image(model),
@@ -133,12 +136,13 @@ export async function getImage(_: unknown, formData: FormData): Promise<{
       size: resolution,
     });
 
-    await db.insert(tokenSpends).values({
-      amount: 1,
-      email: session?.user?.email!,
-      action: "image",
-    });
+    // await db.insert(tokenSpends).values({
+    //   amount: 1,
+    //   email: session?.user?.email!,
+    //   action: "image",
+    // });
 
+    console.log("image", image.base64);
     return {
       errors: {},
       values: {
@@ -190,6 +194,84 @@ export async function getTextToSpeech(
     });
 
     return outputPath;
+  } catch (e) {
+    throw e;
+  }
+}
+
+export async function getVideo(_: unknown, formData: FormData): Promise<{
+  errors: Record<string, string[]>;
+  values: Record<string, string>;
+}> {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  const formValues = {
+    prompt: formData.get("prompt"),
+  };
+
+  const { prompt } = formValues;
+
+  try {
+    const totalUserTokens = await getTotalTokens(
+      session?.user?.email!
+    );
+    console.log("totalUserTokens", totalUserTokens);
+    if (totalUserTokens <= 0) {
+      return {
+        errors: {},
+        values: {
+          text: "Not enough tokens",
+        },
+      };
+    }
+
+    console.log("prompt", prompt);
+    let video = await openai.videos.create({
+      model: 'sora-2',
+      prompt: prompt as string,
+    });
+
+    // Poll until the video is finished processing
+    while (video.status === 'in_progress' || video.status === 'queued') {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      video = await openai.videos.retrieve(video.id);
+    }
+
+    if (video.status === 'failed') {
+      return {
+        errors: {},
+        values: {
+          text: 'Video generation failed',
+        },
+      };
+    }
+
+    const content = await openai.videos.downloadContent(video.id);
+    const arrayBuffer = await content.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+
+    const fileName = `${video.id}.mp4`;
+    const outputPath = `/videos/${fileName}`;
+    const absoluteSubPath = path.resolve(outputPath);
+
+    // Ensure output directory exists
+    await fs.promises.mkdir('./public/videos', { recursive: true });
+    await fs.promises.writeFile(`./public/${absoluteSubPath}`, buffer);
+
+    await db.insert(tokenSpends).values({
+      amount: 1,
+      email: session?.user?.email!,
+      action: "completion",
+    });
+
+    return {
+      errors: {},
+      values: {
+        video: outputPath,
+      },
+    };
   } catch (e) {
     throw e;
   }

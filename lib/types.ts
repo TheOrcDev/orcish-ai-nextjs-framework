@@ -50,6 +50,7 @@ export const Method = {
     Completion: "Completion",
     Image: "Image",
     TTS: "Text to Speech",
+    Video: "Video",
 } as const;
 export type Method = (typeof Method)[keyof typeof Method];
 

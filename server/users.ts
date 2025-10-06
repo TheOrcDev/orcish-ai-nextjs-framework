@@ -20,6 +20,7 @@ export const signInUser = async (email: string, password: string) => {
 
 export const signUpUser = async (email: string, password: string, name: string) => {
     try {
+        console.log("signUpUser", email, password, name);
         await auth.api.signUpEmail({
             body: {
                 email,

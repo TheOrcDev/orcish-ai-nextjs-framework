@@ -10,6 +10,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Method } from "@/lib/types";
 
+import OpenAIVideo from "../open-ai-video/open-ai-video";
+
 const methods = Object.values(Method);
 
 export default function AISelector() {
@@ -34,6 +36,7 @@ export default function AISelector() {
       {methodSelected === Method.Completion && <OpenAICompletion />}
       {methodSelected === Method.Image && <OpenAIImage />}
       {methodSelected === Method.TTS && <TextToSpeech />}
+      {methodSelected === Method.Video && <OpenAIVideo />}
     </div>
   );
 }

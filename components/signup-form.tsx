@@ -58,7 +58,13 @@ export function SignupForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       setIsLoading(true);
-      const response = await signUpUser(values.email, values.password);
+
+      const response = await signUpUser(
+        values.email,
+        values.username,
+        values.password
+      );
+
       if (response.success) {
         toast.success(response.message);
         router.push("/ai-selector");
